@@ -388,7 +388,7 @@ class ilStructureImportTabContentGUI
         				}
         				else
         				{
-        					$this->log->write("Error: Modulefile could not be found in '$filedir'" , 20);
+        					$this->log->write("Error: Modulefile could not be found in '$action_module_dir'" , 20);
         					continue;
         				}
     			    }
@@ -422,7 +422,7 @@ class ilStructureImportTabContentGUI
 		
 		/* Delete file after import */
 		//ilUtil::delDir($filedir, true);
-		unlink($action_module_dir);
+		//unlink($action_module_dir);
 		
 		/* Set template content */
 		$content = '<h1>'.$this->plugin->txt('msg_import_finished').'</h1>';
