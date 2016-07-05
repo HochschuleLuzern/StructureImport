@@ -235,7 +235,7 @@ class ilStructureImportTabContentGUI
 			        $temp_name = $file["tmp_name"];
 			        $filedir = self::IMPORT_FILEDIR . $this->filename;
 			        ilUtil::moveUploadedFile($temp_name, $this->filename, $filedir);
-			        $this->ctrl->setParameter($this, self::IMPORT_FILENAME, $this->filename);
+			        $this->ctrl->setParameter($this, self::IMPORT_FILENAME, urlencode($this->filename));
 			        $status = $filedir;
 			    }
 			    catch (Exception $e)
@@ -323,7 +323,7 @@ class ilStructureImportTabContentGUI
 	private function executeImport()
 	{
 	    $this->tabs->activateTab(self::TAB_IMPORT_ID);
-		$filename = $_GET[self::IMPORT_FILENAME];
+		$filename = urldecode($_GET[self::IMPORT_FILENAME]);
 		$filedir = self::IMPORT_FILEDIR . $filename;
 		
 		if(is_file($filedir))
