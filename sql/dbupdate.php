@@ -7,7 +7,7 @@ if(!$ilDB->tableExists(ilStructureImportDBManager::TABLE_MODULES_NAME))
 	$fields = array(
 		ilStructureImportDBManager::COL_MODULE_ID => array(
 			'type' => 'integer',
-			'length' => 1,
+			'length' => 4,
 			'notnull' => true
 		),
 		
@@ -60,7 +60,7 @@ if(!$ilDB->tableExists(ilStructureImportDBManager::TABLE_CONF_NAME))
     $fields = array(
             ilStructureImportDBManager::COL_CONF_MODULE => array(
                     'type' => 'text',
-                    'length' => 1,
+                    'length' => 100,
                     'notnull' => true
             ),
 
