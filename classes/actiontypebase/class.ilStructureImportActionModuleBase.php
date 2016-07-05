@@ -158,7 +158,7 @@ abstract class ilStructureImportActionModuleBase
 		
 		for($i = 0; $i < $depth && $new_ref != -1; $i++)
 		{
-			$piece = $path_pieces[$i];
+			$piece = trim($path_pieces[$i]);
 			if($piece != '.' && $piece != '')
 			{
 				$new_ref = $this->findChildObject($new_ref, $piece);
