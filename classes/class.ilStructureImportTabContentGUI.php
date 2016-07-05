@@ -380,10 +380,10 @@ class ilStructureImportTabContentGUI
         				
         				$tmp = str_replace('class.', '', $filename);
         				$class_name = str_replace('.php', '', $tmp);
-        				$filedir = self::PATH_TO_ACTION_MODULES . $filename;
-        				if(is_file($filedir))
+        				$action_module_dir = self::PATH_TO_ACTION_MODULES . $filename;
+        				if(is_file($action_module_dir))
         				{
-        					include_once($filedir);
+        					include_once($action_module_dir);
         					$action_modules[$module_name] = new $class_name($this->log);
         				}
         				else
@@ -422,7 +422,7 @@ class ilStructureImportTabContentGUI
 		
 		/* Delete file after import */
 		//ilUtil::delDir($filedir, true);
-		unlink($filedir);
+		unlink($action_module_dir);
 		
 		/* Set template content */
 		$content = '<h1>'.$this->plugin->txt('msg_import_finished').'</h1>';
