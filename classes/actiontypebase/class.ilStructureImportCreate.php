@@ -146,21 +146,20 @@ abstract class ilStructureImportCreate extends ilStructureImportActionModuleBase
 		    
 		        if(!$val_res)
 		        {
-		            $this->log->write($plugin->txt("error_obj_subobj_not_allowed") . " " .
-                        $plugin->txt(static::getActionLangName()), 10);
+		            $this->log->write("Error: Object - Subobject combination of $parent_type - $this->type is not allowed", 10);
 		            
                     $status = -1;
 		        }
 		    }
 		    else
 		    {
-		        $this->log->write($plugin->txt("error_invalid_container_ref"), 20);
+		        $this->log->write("Error: Invalid excelsheet", 20);
 		        $status = -1;
 		    }
 		}
 		else
 		{
-		    $this->log->write($plugin->txt("error_action_permission_denied"), 10);
+		    $this->log->write("Error: You dont have to permission to create objects here", 10);
 		    $status = -1;
 		}
 		

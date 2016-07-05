@@ -347,9 +347,10 @@ class ilStructureImportTabContentGUI
     		
     		if(import_array == -1)
     		{
-    		    $this->log->write('Error while importing excel', 20);
+    		    $this->log->write('Error while importing excelsheet', 20);
     		    unset($this->log);
-    		    return;
+    		    ilUtil::sendFailure("Error while importing excelsheet", true);
+    		    ilUtil::redirect('index.php');
     		}
     		$this->log->write('Imported Excelfile', 1);
     		
@@ -379,14 +380,15 @@ class ilStructureImportTabContentGUI
         				
         				$tmp = str_replace('class.', '', $filename);
         				$class_name = str_replace('.php', '', $tmp);
-        				if(is_file(self::PATH_TO_ACTION_MODULES . $filename))
+        				$filedir = self::PATH_TO_ACTION_MODULES . $filename;
+        				if(is_file($filedir))
         				{
-        					include_once(self::PATH_TO_ACTION_MODULES . $filename);
+        					include_once($filedir);
         					$action_modules[$module_name] = new $class_name($this->log);
         				}
         				else
         				{
-        					$this->log->write($this->plugin->txt('error_modulefile_not_found', 20));
+        					$this->log->write("Error: Modulefile could not be found in '$filedir'" , 20);
         					continue;
         				}
     			    }
@@ -395,11 +397,7 @@ class ilStructureImportTabContentGUI
     			    $this->log->write("Executing the Module '" . $module_name ."'", 5);
     			    $new_ref = $action_modules[$module_name]->executeAction($row, $root_ref, $current_ref);
     			    
-    			    if($new_ref == -1)
-    			    {
-    			        $this->log->write($action_modules[$module_name]->getErrorMessage(), 10);
-    			    }
-    			    else
+    			    if($new_ref != -1)
     			    {
     			        $this->log->write("Action successfully executed!", 5);
     			        $current_ref = $new_ref;
@@ -408,7 +406,7 @@ class ilStructureImportTabContentGUI
     			}
     			else
     			{
-    				$this->log->write($this->plugin->txt('error_module_not_found_in_db'), 10);
+    				$this->log->write("Error: The module '$module_name' could not be found in the DB", 10);
     			}
     		}
 		}
@@ -419,7 +417,7 @@ class ilStructureImportTabContentGUI
 		}
 		
 		/* Finished Import :) */
-		$this->log->write('Import beendet');
+		$this->log->write('Import successfully finished');
 		unset($this->log);
 		
 		/* Delete file after import */
