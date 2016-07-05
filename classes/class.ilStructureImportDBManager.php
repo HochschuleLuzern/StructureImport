@@ -274,7 +274,6 @@ class ilStructureImportDBManager
 					self::COL_OPTIONAL_PARAMETERS => array("text", $module_from_file[self::COL_OPTIONAL_PARAMETERS]),
 					self::COL_FILENAME => array("text", $module_from_file[self::COL_FILENAME])
 			);
-			//var_dump($fields);die;
 			if($module_id > 0)
 			{
 				// Update

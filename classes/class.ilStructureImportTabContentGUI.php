@@ -307,7 +307,6 @@ class ilStructureImportTabContentGUI
 	{
 	    $this->tabs->activateTab(self::TAB_UPDATE_DB);
 		$updated_modules = $this->plugin->updateModuleDB();
-		$this->tpl->setContent(print_r($updated_modules, true));
 		
 		$html = '<h1>'.$this->plugin->txt('msg_modules_in_db').'</h1>';
 		$html .= '<ul>';

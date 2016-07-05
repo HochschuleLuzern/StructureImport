@@ -81,7 +81,6 @@ class ilStructureImportReporter
 		foreach ($action_types as $action_type)
 		{
 			$header_row = $this->db_manager->_lookupRequiredParametersForActionType($action_type);
-			//var_dump($header_row);echo '<hr>';
 			$this->executable_array[$action_type][0] = $header_row;
 		}		
 	}
@@ -168,12 +167,11 @@ class ilStructureImportReporter
 				
 				$array_index = count($this->executable_array[$action_type]);
 
-				//echo $slot;
 				$this->executable_array[$action_type][$array_index] = $tmp_array;
 				$this->valid_actions++;
 			}
 			else 
-			{			//var_dump($this->structure_iImport_array[$i]);die;
+			{			
 				$array_index = count($this->error_array);
 				$tmp_array = array();
 				$tmp_array['msg_error'] = $error_text;
@@ -257,8 +255,6 @@ class ilStructureImportReporter
 		foreach ($array[0] as $element)
 		{
 			$html .= ('<th>'. $this->plugin->txt($element).'</th>');
-			//var_dump($element);
-			//die;
 		}
 		$html .= '</tr></thead><tbody>';
 		

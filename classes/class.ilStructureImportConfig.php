@@ -40,14 +40,16 @@ class ilStructureImportConfig {
 	/**
 	 * @param $table_name
 	 */
-	function __construct() {
+	function __construct() 
+	{
 	    $this->plugin = ilStructureImportPlugin::getInstance();
 	    $this->db_manager = ilStructureImportDBManager::getInstance();
 	}
 
 	public static function getInstance()
 	{
-	    if (!isset(self::$instance)) {
+	    if (!isset(self::$instance)) 
+	    {
 	        self::$instance = new self();
 	    }
 	    return self::$instance;
@@ -56,7 +58,8 @@ class ilStructureImportConfig {
 	/**
 	 * @param string $table_name
 	 */
-	public function setTableName($table_name) {
+	public function setTableName($table_name) 
+	{
 		$this->table_name = $table_name;
 	}
 
@@ -64,38 +67,17 @@ class ilStructureImportConfig {
 	/**
 	 * @return string
 	 */
-	public function getTableName() {
+	public function getTableName() 
+	{
 		return $this->table_name;
 	}
-
-
-	/*
-	 * @param $method
-	 * @param $params
-	 *
-	 * @return bool|null
-	 
-	function __call($method, $params) {
-		if (substr($method, 0, 3) == 'get') {
-			return $this->getValue(self::_fromCamelCase(substr($method, 3)));
-		} else {
-			if (substr($method, 0, 3) == 'set') {
-				$this->setValue(self::_fromCamelCase(substr($method, 3)), $params[0]);
-
-				return true;
-			} else {
-				return NULL;
-			}
-		}
-	}*/
-
 
 	/**
 	 * @param $key
 	 * @param $value
 	 */
-	public function setValue($module_name, $key, $value) {
-	    //echo $module_name . ' ' . $key . ' ' . $value . '<br>';
+	public function setValue($module_name, $key, $value) 
+	{
 		global $ilDB;
 		if (!is_string($this->getValue($module_name, $key))) {
 			$ilDB->insert($this->getTableName(), array( 
@@ -112,7 +94,9 @@ class ilStructureImportConfig {
 					$value
 				)
 			));
-		} else {
+		} 
+		else 
+		{
 			$ilDB->update($this->getTableName(), array(
 			    "module_name" => array(
 			            "text",
@@ -145,8 +129,10 @@ class ilStructureImportConfig {
 	 *
 	 * @return bool|string
 	 */
-	public function getValue($module_name, $key) {
-		if (!isset(self::$cache[$key])) {
+	public function getValue($module_name, $key) 
+	{
+		if (!isset(self::$cache[$key])) 
+		{
 			global $ilDB;
 			
 			$result = $ilDB->query("SELECT value FROM " . $this->getTableName() 

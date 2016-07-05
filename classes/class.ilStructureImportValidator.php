@@ -65,45 +65,6 @@ class ilStructureImportValidator
 		
 		return $ret;
 	}
-		
-	/**
-	 * Checks if the action is available
-	 * 
-	 * @param unknown $action
-	 */
-	public static function checkAction($action, $actionType = '')
-	{
-		$ret = "";
-		if($actionType == '')
-		{
-			// TODO: Add function to read from db...
-			$plugin = ilStructureImportPlugin::getInstance();
-			$availableActions = array();
-			$actionFound;
-			$ret = false;
-			
-			$count = count($availableActions) - 1;
-			for($i = 0; $i < $count; $i++)
-			{
-				// TODO Get lang function
-				echo 'Get a lang function!';
-				die;
-				if($action == $plugin->txt($availableActions[$i]))
-				{
-					$actionFound = true;
-				}
-			}
-			if(!$actionFound)
-			{
-				$ret = "Action not found!";
-			}
-		}
-		else
-		{
-			$ret = self::checkOldAction($action, $actionType);
-		}
-		return $ret;
-	}
 	
 	/**
 	 * Checks actions from the old styled excelfile. This version was just

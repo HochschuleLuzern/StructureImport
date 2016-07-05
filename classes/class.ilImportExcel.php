@@ -221,7 +221,6 @@ class ilImportExcel
 			{
 				$value = "";
 			}
-			//echo $row_title; var_dump($value);
 			$row[$row_title] = $value;
 		}
 		

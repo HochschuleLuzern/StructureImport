@@ -76,7 +76,6 @@ abstract class ilStructureImportCreate extends ilStructureImportActionModuleBase
             }
             catch(Exception $e)
             {
-                var_dump($new_obj);die; // This is just for Developement TODO: Delete at release
                 $new_obj->delete();
                 $status = -1;
             }  

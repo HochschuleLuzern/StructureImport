@@ -65,7 +65,6 @@ class ilStructureImportPlugin extends ilUserInterfaceHookPlugin
 					}
 				}
 			}
-			//var_dump($module_list);die;
 			$db_manager->_updateModuleList($module_list);
 			
 			return $module_list;
