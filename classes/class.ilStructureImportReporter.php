@@ -239,7 +239,7 @@ class ilStructureImportReporter
 	function getIliasTable($object_gui, $table_array, $title)
 	{
 		global $iltpl, $ilCtrl;
-		$tbl_mod = new ilStructureImportReporterTableGUI($object_gui, $title, $table_array[0]);
+		$tbl_mod = new ilStructureImportReporterTableGUI($object_gui, $title, $table_array[0], count($table_array)-1);
 		unset($table_array[0]);
 		$tbl_mod->setData($table_array);				
 		$html =  $tbl_mod->getHTML();

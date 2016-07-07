@@ -3,13 +3,13 @@ include_once ('./Services/Table/classes/class.ilTable2GUI.php');
 
 class ilStructureImportReporterTableGUI extends ilTable2GUI
 {
-	function __construct($object_gui, $title, $headerRow)
+	function __construct($object_gui, $title, $headerRow, $number_of_actions = null)
 	{
 		parent::__construct($object_gui);
 		$this->plugin = ilStructureImportPlugin::getInstance();
 		$this->headerRow = $headerRow;
 		$this->cols = count($headerRow);
-		$this->setTitle($title);
+		$this->setTitle($number_of_actions==null?$title:"$title($number_of_actions)");
 		$this->setEnableHeader(true);
 		$this->disable('sort');
 		$this->disable('numinfo');
