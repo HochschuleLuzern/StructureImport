@@ -1,0 +1,8 @@
+## Ignore log and import directory
+/log/*
+/import/*
+
+## Ignore eclipse stuff
+/.buildpath
+/.project
+/.settings/*
