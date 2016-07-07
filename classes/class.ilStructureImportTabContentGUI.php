@@ -458,7 +458,7 @@ class ilStructureImportTabContentGUI
 	    
 	    $tpl = new ilTemplate("tpl.instruction_main.html", true, true, "Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport");
 	    
-	    //$tpl->setCurrentBlock("intro");
+	    $tpl->setCurrentBlock("intro");
 	    $tpl->setVariable("INSTRUCTION_TITLE", $this->plugin->txt("instruction_main_title"));
 	    
 	    $tpl->setVariable("VERSION_INFOTEXT", $this->plugin->txt("instruction_infobox"));
