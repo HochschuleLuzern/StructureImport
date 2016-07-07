@@ -261,7 +261,7 @@ class ilStructureImportTabContentGUI
 	
 	private function checkAccess()
 	{
-	    global $rbacreview, $ilUser;
+	    global $rbacsystem, $rbacreview, $ilUser;
 	    
 	    $has_access = false;
 	    
@@ -278,19 +278,26 @@ class ilStructureImportTabContentGUI
 	        ilUtil::sendFailure('error_iluser_is_not_set', true);
 	        ilUtil::redirect('index.php');
 	    }
+	    $user_id = $ilUser->getId();
 	    
 	    /* Check for admins */
-	    $this->is_admin = in_array($ilUser->getId(), $rbacreview->assignedUsers(2));
+	    if ($this->is_admin = in_array($user_id, $rbacreview->assignedUsers(2)))
+	        return $this->is_admin;
+	    
+	    if($rbacsystem->checkAccess('write', $this->ref_id))
+	    {
+	        $has_create_access = true;
+	    }
 	    
 	    /* Check for importer role */
 	    $this->importer_role_id = $this->plugin->getImporterRoleId();
 	    if($this->importer_role_id != null)
 	    {
-	        $this->is_importer = in_array($ilUser->getId(), $rbacreview->assignedUsers($this->importer_role_id));
+	        $this->is_importer = in_array($user_id, $rbacreview->assignedUsers($this->importer_role_id));
 	    }
 	    
 	    /* No admin and No importer role = no access to this plugin */
-	    if($this->is_admin || $this->is_importer)
+	    if($this->is_importer && $has_create_access)
 	    {
 	        $has_access = true;
 	    }

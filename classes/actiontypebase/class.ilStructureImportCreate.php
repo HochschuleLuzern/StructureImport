@@ -130,7 +130,7 @@ abstract class ilStructureImportCreate extends ilStructureImportActionModuleBase
 		$status = 0;
 
 		/* Check create permission */
-		if($rbacsystem->checkAccess('create', $container_ref, $this->type))
+		if($rbacsystem->checkAccess('write', $container_ref, $this->type))
 		{
 		    /* Check obj-subobj */
 		    $parent_obj_id = ilObject::_lookupObjId($container_ref);

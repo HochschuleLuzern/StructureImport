@@ -19,7 +19,7 @@ class ilStructureImportUIHookGUI extends ilUIHookPluginGUI {
     
 	function modifyGUI($a_comp, $a_part, $a_par = array())
 	{
-		global $ilCtrl, $tree, $ilTabs, $rbacreview, $ilias, $ilUser;
+		global $ilCtrl, $tree, $ilTabs, $rbacreview, $rbacsystem, $ilias, $ilUser;
 		
 		$plugin = ilStructureImportPlugin::getInstance();
 		
@@ -29,12 +29,14 @@ class ilStructureImportUIHookGUI extends ilUIHookPluginGUI {
 		    return array();
 		}
 		
+		$user_id = $ilUser->getId();
+		
 		/* Check if user is admin */
-		$is_admin = in_array($ilUser->getId(), $rbacreview->assignedUsers(2));
+		$is_admin = in_array($user_id, $rbacreview->assignedUsers(2));
 	    $importer_role_id = $plugin->getImporterRoleId();
 	    if($importer_role_id != null)
 	    {
-	        $is_importer = in_array($ilUser->getId(), $rbacreview->assignedUsers($importer_role_id));
+	        $is_importer = in_array($user_id, $rbacreview->assignedUsers($importer_role_id));
 	    }
 	    else
 	    {
@@ -44,7 +46,7 @@ class ilStructureImportUIHookGUI extends ilUIHookPluginGUI {
 		/* Check ref_id */
 		$ref_id = (int)$_GET['ref_id'];
 		
-		if($ref_id > 0 && ($is_admin || $is_importer))
+		if($ref_id > 0 && (($is_admin || $is_importer) && $rbacsystem->checkAccess('write', $ref_id)))
 		{
 		    /* Gets the type of the current object
 		     * Structure Import is only needed in Container Objects */
