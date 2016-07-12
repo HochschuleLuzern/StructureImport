@@ -456,34 +456,35 @@ class ilStructureImportTabContentGUI
 	    
 	    $tpl->setCurrentBlock("intro");
 	    $tpl->setVariable("INSTRUCTION_TITLE", $this->plugin->txt("instruction_main_title"));
-	    
-	    $tpl->setVariable("VERSION_INFOTEXT", $this->plugin->txt("instruction_infobox"));
-	    
-	    $tpl->setVariable("TITLE_PARAGRAPH_1", $this->plugin->txt("instruction_title_1"));
-	    $tpl->setVariable("TEXT_PARAGRAPH_1", $this->plugin->txt("instruction_paragraph_1"));
-	    $tpl->setVariable("IMG_SRC_EXCEL_SHEET", ilUtil::getImagePath("img_excel_sheet.jpg", "Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport"));
-	    
-	    $tpl->setVariable("TITLE_PARAGRAPH_2", $this->plugin->txt("instruction_title_2"));
-	    $tpl->setVariable("TEXT_PARAGRAPH_2", $this->plugin->txt("instruction_paragraph_2"));
+	    $tpl->setVariable("INSTRUCTION_TEXT", $this->plugin->txt("instruction_main_text"));
 	    $link = $this->config->getValue(ilStructureImportConfig::CONF_MAIN_SETTINGS, ilStructureImportConfig::CONF_INSTRUCTION_FILES_CONTAINER);
 	    if($link != null)
 	    {
-	        $html_link = "<a href='$link'>Zur Seite mit den Dokumenten</a>";
+	        $html_link = "<a href='$link'>".$this->plugin->txt("instruction_link_to_documents")."</a>";
 	        $tpl->setVariable("LINK_TO_INSTRUCTION_DIRECTORY", $html_link);
 	    }
 	    else
 	    {
 	        $tpl->setVariable("LINK_TO_INSTRUCTION_DIRECTORY", $this->plugin->txt('error_link_missing'));
 	    }
-	    $tpl->setVariable("IMG_SRC_OPEN_IMPORT", ilUtil::getImagePath("img_open_import.jpg", "Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport"));
-	     
 	    
-	    $tpl->setVariable("TITLE_PARAGRAPH_3", $this->plugin->txt("instruction_title_3"));
-	    $tpl->setVariable("TEXT_PARAGRAPH_3", $this->plugin->txt("instruction_paragraph_3"));
+	    $tpl->setVariable("VERSION_INFOTEXT", $this->plugin->txt("instruction_infobox"));
+	    
+	    $tpl->setVariable("TITLE_CREATE_EXCEL", $this->plugin->txt("instruction_create_excel_title"));
+	    $tpl->setVariable("TEXT_CREATE_EXCEL", $this->plugin->txt("instruction_create_excel_text"));
+	    $tpl->setVariable("IMG_SRC_EXCEL_SHEET", ilUtil::getImagePath("img_excel_sheet.jpg", "Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport"));
+	    
+	    $tpl->setVariable("TITLE_CHOOSE_DIR", $this->plugin->txt("instruction_choose_dir_title"));
+	    $tpl->setVariable("TEXT_CHOOSE_DIR", $this->plugin->txt("instruction_choose_dir_text"));
+	    $tpl->setVariable("IMG_SRC_OPEN_IMPORT", ilUtil::getImagePath("img_open_import.jpg", "Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport"));
+	    
+	    $tpl->setVariable("TITLE_UPLOAD_FILE", $this->plugin->txt("instruction_upload_file_title"));
+	    $tpl->setVariable("TEXT_UPLOAD_FILE", $this->plugin->txt("instruction_upload_file_text"));
 	    $tpl->setVariable("IMG_SRC_UPLOAD_FILE", ilUtil::getImagePath("img_upload_file.jpg", "Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport"));
 	     
-	    $tpl->setVariable("TITLE_PARAGRAPH_4", $this->plugin->txt("instruction_title_4"));
-	    $tpl->setVariable("TEXT_PARAGRAPH_4", $this->plugin->txt("instruction_paragraph_4"));
+	    $tpl->setVariable("TITLE_CHECK_ACTIONS_AND_IMPORT", $this->plugin->txt("instruction_check_actions_and_import_title"));
+	    $tpl->setVariable("TEXT_CHECK_ACTIONS_AND_IMPORT", $this->plugin->txt("instruction_check_actions_and_import_text"));
+	    $tpl->setVariable("TEXT_HTML_CAUTION_WITH_ERRORS", $this->plugin->txt("instruction_caution_with_errors_html_text"));
 	    $tpl->setVariable("IMG_SRC_EXECUTE_IMPORT", ilUtil::getImagePath("img_execute_import.jpg", "Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport"));
 	     
         $tpl->parseCurrentBlock();
