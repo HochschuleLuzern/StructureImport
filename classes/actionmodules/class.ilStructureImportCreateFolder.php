@@ -12,6 +12,7 @@ class ilStructureImportCreateFolder extends ilStructureImportCreate
 	protected static $action_lang_name = 'action_create_folder';
 	protected static $required_parameters = 'action;name;path';
 	protected static $optional_parameters = 'description;hslutype';
+	protected static $create_type = 'fold';
 	
 	public function __construct($log)
 	{

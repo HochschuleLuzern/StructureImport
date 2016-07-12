@@ -50,6 +50,7 @@ class ilStructureImportTabContentGUI
 		$this->user = &$ilUser;
 		$this->obj = ilObjectFactory::getInstanceByRefId($this->ref_id);		
 		$this->config = ilStructureImportConfig::getInstance();
+		$this->access_checker  = ilStructureImportAccess::getInstance();
 	}
 	
 	function executeCommand()
@@ -278,23 +279,18 @@ class ilStructureImportTabContentGUI
 	        ilUtil::sendFailure('error_iluser_is_not_set', true);
 	        ilUtil::redirect('index.php');
 	    }
+	    
 	    $user_id = $ilUser->getId();
 	    
 	    /* Check for admins */
-	    if ($this->is_admin = in_array($user_id, $rbacreview->assignedUsers(2)))
+	    if ($this->is_admin = $this->access_checker->isAdminRole($user_id))
 	        return $this->is_admin;
 	    
-	    if($rbacsystem->checkAccess('write', $this->ref_id))
-	    {
-	        $has_create_access = true;
-	    }
+	    /* Check for create access */
+	    $has_create_access = $this->access_checker->hasCreateAccess($user_id, $this->ref_id);
 	    
 	    /* Check for importer role */
-	    $this->importer_role_id = $this->plugin->getImporterRoleId();
-	    if($this->importer_role_id != null)
-	    {
-	        $this->is_importer = in_array($user_id, $rbacreview->assignedUsers($this->importer_role_id));
-	    }
+        $this->is_importer = $this->access_checker->isImporterRole($user_id);
 	    
 	    /* No admin and No importer role = no access to this plugin */
 	    if($this->is_importer && $has_create_access)

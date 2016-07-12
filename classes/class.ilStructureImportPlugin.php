@@ -27,7 +27,8 @@ class ilStructureImportPlugin extends ilUserInterfaceHookPlugin
 	 * @return ilStructureImportDBManager
 	 */
 	public static function getInstance() {
-		if (!isset(self::$instance)) {
+		if (!isset(self::$instance)) 
+		{
 			self::$instance = new self();
 		}
 		return self::$instance;
@@ -71,6 +72,37 @@ class ilStructureImportPlugin extends ilUserInterfaceHookPlugin
 		}
 	}
 	
+	public function getCreateTypesAsArray()
+	{
+	    $db_manager = ilStructureImportDBManager::getInstance();
+	    $create_types = array();
+	    
+	    foreach($db_manager->_lookupAllModules() as $action_module_record)
+	    {
+	        if($action_module_record[ilStructureImportDBManager::COL_ACTION_TYPE] == 'create')
+	        {
+	            try 
+	            {
+        			$filename = $action_module_record[ilStructureImportDBManager::COL_FILENAME];
+        			$tmp = str_replace('class.', '', $filename);
+        			$class_name = str_replace('.php', '', $tmp);
+        			
+        			$action_module_dir = self::PATH_TO_ACTION_MODULES . $filename;
+        			if(is_file($action_module_dir))
+        			{
+        				include_once($action_module_dir);
+        				$create_types[] = call_user_func(array($class_name, 'getCreateType'));
+        			}
+	            }
+	            catch (Exception $e)
+	            {
+	                return array();
+	            }
+	        }
+	    }
+	    return $create_types;
+	}
+	
 	public function getRoleName()
 	{
 	    return 'Structure Importer';
@@ -93,7 +125,6 @@ class ilStructureImportPlugin extends ilUserInterfaceHookPlugin
 	        $importer_role_id = null;
 	    }
 	    return $importer_role_id;
-	    
 	}
 }
  

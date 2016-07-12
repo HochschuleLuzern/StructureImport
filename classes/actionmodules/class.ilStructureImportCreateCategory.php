@@ -10,6 +10,7 @@ class ilStructureImportCreateCategory extends ilStructureImportCreate
 	protected static $action_lang_name = 'action_create_category';
 	protected static $required_parameters = 'action;name;path';
 	protected static $optional_parameters = 'description';
+	protected static $create_type = 'cat';
 	
 	public function __construct($log)
 	{

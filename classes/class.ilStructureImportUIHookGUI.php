@@ -4,6 +4,7 @@
 
 include_once("./Services/UIComponent/classes/class.ilUIHookPluginGUI.php");
 include_once("./Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportTabContentGUI.php");
+include_once("./Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportAccess.php");
 
 /**
 * ilBacklinkUIHookGUI class
@@ -19,53 +20,39 @@ class ilStructureImportUIHookGUI extends ilUIHookPluginGUI {
     
 	function modifyGUI($a_comp, $a_part, $a_par = array())
 	{
-		global $ilCtrl, $tree, $ilTabs, $rbacreview, $rbacsystem, $ilias, $ilUser;
+		global $ilCtrl, $ilTabs;
 		
-		$plugin = ilStructureImportPlugin::getInstance();
-		
-		// $ilUser is not necesseraly defined (access for newsfeed etc.)
-		if(!$ilUser)
+		/* The Structureimporttab should only be showed in tabs (logic) */
+		if($a_part == "tabs")
 		{
-		    return array();
-		}
-		
-		$user_id = $ilUser->getId();
-		
-		/* Check if user is admin */
-		$is_admin = in_array($user_id, $rbacreview->assignedUsers(2));
-	    $importer_role_id = $plugin->getImporterRoleId();
-	    if($importer_role_id != null)
-	    {
-	        $is_importer = in_array($user_id, $rbacreview->assignedUsers($importer_role_id));
-	    }
-	    else
-	    {
-	        $is_importer = false;
-	    }
-		
-		/* Check ref_id */
-		$ref_id = (int)$_GET['ref_id'];
-		
-		if($ref_id > 0 && (($is_admin || $is_importer) && $rbacsystem->checkAccess('write', $ref_id)))
-		{
+		    /* Get ref_id from current dir */
+		    $ref_id = (int)$_GET['ref_id'];
+		    
 		    /* Gets the type of the current object
 		     * Structure Import is only needed in Container Objects */
-    		$object = $ilias->obj_factory->getInstanceByRefId($ref_id);
-    		$obj_type=$object->getType();
-    		$obj_types_with_tab = array('cat','fold','crs','grp');
-    		    		
-    		if ($a_part == "tabs" && in_array($obj_type, $obj_types_with_tab))
-    		{
-    		    /* Check if cmd class is already from */
-    		    $cmd_class = $ilCtrl->getCmdClass();
-    		    $is_already_in_content_class = $cmd_class == self::TAB_CONTENT_CLASS ? true: false;
-    		    
-    		    if(!$is_already_in_content_class)
-    		    {
-    		        /* Finally adds the link to the structure import plugin */
-		            self::getStructureImportTab($ilTabs, $ref_id);
-    		    }
-    		}
+		    $obj_id = ilObject::_lookupObjectId($ref_id);
+		    $obj_type= ilObject::_lookupType($obj_id);
+		    $obj_types_with_tab = array('cat','fold','crs','grp');
+		    
+		    if (in_array($obj_type, $obj_types_with_tab))
+		    {
+        		$plugin = ilStructureImportPlugin::getInstance();
+        		$access_checker = ilStructureImportAccess::getInstance();
+        		
+        		/* Check for role and create permission */
+        		if($ref_id > 0 && $access_checker->hasAccessToPlugin($ref_id))
+        		{
+            		    /* Check if cmd class is already from */
+            		    $cmd_class = $ilCtrl->getCmdClass();
+            		    $is_already_in_content_class = $cmd_class == self::TAB_CONTENT_CLASS ? true: false;
+            		    
+            		    if(!$is_already_in_content_class)
+            		    {
+            		        /* Finally adds the link to the structure import plugin */
+        		            self::getStructureImportTab($ilTabs, $ref_id);
+            		    }
+        		}
+		    }
 		}
 	}	
 	

@@ -7,6 +7,7 @@ abstract class ilStructureImportCreate extends ilStructureImportActionModuleBase
     const CONF_ORDER_TYPE = 'order_type';
     
     protected $order_type;
+    protected static $create_type = '';
     
     public function __construct($log)
     {
@@ -130,7 +131,7 @@ abstract class ilStructureImportCreate extends ilStructureImportActionModuleBase
 		$status = 0;
 
 		/* Check create permission */
-		if($rbacsystem->checkAccess('write', $container_ref, $this->type))
+		if($rbacsystem->checkAccess('create', $container_ref, $this->type))
 		{
 		    /* Check obj-subobj */
 		    $parent_obj_id = ilObject::_lookupObjId($container_ref);
@@ -188,6 +189,11 @@ abstract class ilStructureImportCreate extends ilStructureImportActionModuleBase
 	        }
 	    }
 	}*/
+	
+	public static function getCreateType()
+	{
+	    return static::$create_type;
+	}
 	
 	public static function getConfFields()
 	{
