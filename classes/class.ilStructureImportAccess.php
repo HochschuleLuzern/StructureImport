@@ -111,24 +111,20 @@ class ilStructureImportAccess
         
         /* Get array with allowed subtypes*/
         $allowed_subtypes = $this->getCreatableActionmoduletypes($target_type);
+        $has_create_access = false;
+        
         if(count($allowed_subtypes)>0)
         {
-            $create_allowed = true;
-            $count_allowed_subtypes = 0;
+            $has_create_access = true;
             
             /* Check if create access for every create-module is granted */
             foreach($allowed_subtypes as $create_type)
             {
-                    $count_allowed_subtypes++;
-                    $create_allowed &= $this->rbacsystem->checkAccess($user_id, 'create', $ref_id, $create_type);
-            }
-            if($count_allowed_subtypes == 0)
-            {
-                $create_allowed = false;
+                    $has_create_access &= $this->rbacsystem->checkAccessOfUser($user_id, 'create', $ref_id, $create_type);
             }
         }
-        
-        return $create_allowed;
+
+        return $has_create_access;
     }
     
     /**
@@ -156,7 +152,6 @@ class ilStructureImportAccess
         // Intersection of create-actions and allowed subtypes
         $types_to_check = array_intersect($types_from_action_modules, $allowed_subtypes);
 
-        
         return $types_to_check;
     }
 }
