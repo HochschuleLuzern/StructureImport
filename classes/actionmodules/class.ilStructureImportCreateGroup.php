@@ -46,8 +46,14 @@ class ilStructureImportCreateGroup extends ilStructureImportCreate
 	    }
 		
 		/* Add members */
-		$group_members_object = ilGroupParticipants::_getInstanceByObjId($group_obj->getId());
-		$this->addMembers($group_members_object, $user_string, $role);
+	    $group_members_object = ilGroupParticipants::_getInstanceByObjId($group_obj->getId());
+	    if($user_string != '')
+	    {
+    		$this->addMembers($group_members_object, $user_string, $role);
+	    }
+	    
+	    /* Add Owner as Groupadmin */
+	    $group_members_object->add($this->executing_user, IL_GRP_ADMIN);
 		
 		/* Close group */
 		$group_type = $this->config->getValue(self::getModuleName(),"group_type");

@@ -65,7 +65,10 @@ class ilStructureImportCreateCourse extends ilStructureImportCreate
 		
 		/* Add members */
 		$course_members_object = ilCourseParticipants::_getInstanceByObjId($course_obj->getId());
-		$this->addMembers($course_members_object, $user_string, $role);
+		if($user_string != '')
+		{
+    		$this->addMembers($course_members_object, $user_string, $role);
+		}
 		
 		/* Add Owner as Courseadmin */
 		$course_members_object->add($this->executing_user, IL_CRS_ADMIN);

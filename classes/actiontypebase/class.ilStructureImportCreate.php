@@ -129,40 +129,32 @@ abstract class ilStructureImportCreate extends ilStructureImportActionModuleBase
 		global $rbacsystem, $objDefinition,$ilUser, $lng, $ilObjDataCache, $ilDB;
 		$plugin = ilStructureImportPlugin::getInstance();
 		$status = 0;
+		
+	    /* Check obj-subobj */
+	    $container_obj_id = ilObject::_lookupObjId($container_ref);
+	    $container_type = ilObject::_lookupType($container_obj_id);
+	    
+	    if($container_type != NULL)
+	    {
+	        $query = sprintf("SELECT * FROM il_object_subobj WHERE parent = %s AND subobj = %s",
+	                $ilDB->quote($container_type, 'text'),
+	                $ilDB->quote($this->type, 'text'));
+	        $db_res = $ilDB->query($query);
+	        $val_res = $ilDB->fetchAssoc($db_res);
+	    
+	        if(!$val_res)
+	        {
+	            $this->log->write("Error: Object - Subobject combination of $container_type - $this->type is not allowed", 10);
+	            
+	            $status = -1;
+	        }
+	    }
+	    else
+	    {
+	        $this->log->write("Error: Invalid Type", 20);
+	        $status = -1;
+	    }
 
-		/* Check create permission */
-		if($rbacsystem->checkAccess('create', $container_ref, $this->type))
-		{
-		    /* Check obj-subobj */
-		    $parent_obj_id = ilObject::_lookupObjId($container_ref);
-		    $parent_type = ilObject::_lookupType($parent_obj_id);
-		    
-		    if($parent_type != NULL)
-		    {
-		        $query = sprintf("SELECT * FROM il_object_subobj WHERE parent = %s AND subobj = %s",
-		                $ilDB->quote($parent_type, 'text'),
-		                $ilDB->quote($this->type, 'text'));
-		        $db_res = $ilDB->query($query);
-		        $val_res = $ilDB->fetchAssoc($db_res);
-		    
-		        if(!$val_res)
-		        {
-		            $this->log->write("Error: Object - Subobject combination of $parent_type - $this->type is not allowed", 10);
-		            
-                    $status = -1;
-		        }
-		    }
-		    else
-		    {
-		        $this->log->write("Error: Invalid excelsheet", 20);
-		        $status = -1;
-		    }
-		}
-		else
-		{
-		    $this->log->write("Error: You dont have to permission to create objects here", 10);
-		    $status = -1;
-		}
 		
 		return $status;
 	}
