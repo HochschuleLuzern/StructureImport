@@ -73,7 +73,21 @@ abstract class ilStructureImportCreate extends ilStructureImportActionModuleBase
                 $this->log->write("New object with ref_id '" . $new_obj->getRefId()."' added in tree ", 1);
                 
                 /* Other options */
-                $new_obj->setOrderType($this->order_type);
+                // Set sortmode by input or configuration
+                $sort_type = $this->getOrderTypeIndex($row[$this->plugin->txt(ilImportExcel::EXCELCOL_SORT_TYPE)]);
+                
+                // Some containers need to do this with a settings object, and some containers can do this direct
+                include_once('Services/Container/classes/class.ilContainerSortingSettings.php');
+                $settings = new ilContainerSortingSettings($new_obj->getId());
+                $settings->setSortMode($sort_type);
+                $settings->setSortDirection(ilContainer::SORT_DIRECTION_ASC);
+                
+                $new_obj->setOrderType($sort_type);
+                
+                $this->log->write("Setted ordertyp to " . $sort_type, 1);
+                
+                $settings->update();
+                $new_obj->update();
             }
             catch(Exception $e)
             {
@@ -83,6 +97,35 @@ abstract class ilStructureImportCreate extends ilStructureImportActionModuleBase
         }
         
         return $status;        
+    }
+    
+    private function getOrderTypeIndex($order_type_name)
+    {
+        $ret = -1;
+        
+        switch($order_type_name)
+        {
+            case $this->plugin->txt('config_sort_by_title'):
+                $ret = ilContainer::SORT_TITLE;
+                break;
+            case $this->plugin->txt('config_sort_by_manual'):
+                $ret = ilContainer::SORT_MANUAL;
+                break;
+            case $this->plugin->txt('config_sort_by_activation'):
+                $ret = ilContainer::SORT_ACTIVATION;
+                break;
+            case $this->plugin->txt('config_sort_by_inherit'):
+                $ret = ilContainer::SORT_INHERIT;
+                break;
+            case $this->plugin->txt('config_sort_by_creation'):
+                $ret = ilContainer::SORT_CREATION;
+                break;
+            default:
+                $ret = $this->order_type;
+                break;
+        }
+        
+        return $ret;
     }
 
     protected function checkForDuplicate($container_ref, $title, $type)
@@ -195,11 +238,11 @@ abstract class ilStructureImportCreate extends ilStructureImportActionModuleBase
 	            self::CONF_ORDER_TYPE => array(
 	                    'type' => 'ilSelectInputGUI',
 	                    'options' => array(
-	                            SORT_TITLE => $plugin->txt('config_sort_by_title'),
-	                            SORT_MANUAL => $plugin->txt('config_sort_by_manuel'),
-	                            SORT_ACTIVATION => $plugin->txt('config_sort_by_activation'),
-	                            SORT_INHERIT => $plugin->txt('config_sort_by_inherit'),
-	                            SORT_CREATION => $plugin->txt('config_sort_by_creation')
+	                            ilContainer::SORT_TITLE => $plugin->txt('config_sort_by_title'),
+	                            ilContainer::SORT_MANUAL => $plugin->txt('config_sort_by_manual'),
+	                            ilContainer::SORT_ACTIVATION => $plugin->txt('config_sort_by_activation'),
+	                            ilContainer::SORT_INHERIT => $plugin->txt('config_sort_by_inherit'),
+	                            ilContainer::SORT_CREATION => $plugin->txt('config_sort_by_creation')
 	                    )
 	            )
 	    );
@@ -213,7 +256,7 @@ abstract class ilStructureImportCreate extends ilStructureImportActionModuleBase
 	    
 	    $child_values = array(
 	            //$key => $value
-	            self::CONF_ORDER_TYPE => SORT_TITLE
+	            self::CONF_ORDER_TYPE => ilContainer::SORT_TITLE
 	    );
 	    
 	    $default_values = $parent_values + $child_values;

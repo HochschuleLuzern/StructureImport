@@ -2,6 +2,9 @@
 /log/*
 /import/*
 
+## Do not ignore template excelsheet
+!/import/import_template_german.xlsm
+
 ## Ignore eclipse stuff
 /.buildpath
 /.project

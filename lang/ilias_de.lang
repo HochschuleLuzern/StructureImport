@@ -38,6 +38,7 @@ excelcol_type_old#:#Typ
 excelcol_login#:#Login
 excelcol_role#:#Rolle
 excelcol_permission_type#:#Rechtetyp
+excelcol_sort_type#:#Sortiertyp
 excelcol_msg_error#:#Fehlermeldung
 
 folder_permission_postbox#:#Briefkasten
@@ -91,7 +92,7 @@ config_group_open#:#Gruppe offen
 config_group_closed#:#Gruppe geschlossen
 config_order_type#:#Sortierung
 config_sort_by_title#:#Titel
-config_sort_by_manuel#:#Manuell
+config_sort_by_manual#:#Manuell
 config_sort_by_activation#:#Aktivierung
 config_sort_by_inherit#:#Geerbt
 config_sort_by_creation#:#Erstellt am

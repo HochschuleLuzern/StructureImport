@@ -22,6 +22,7 @@ class ilImportExcel
     const EXCELCOL_LOGIN = 'excelcol_login';
     const EXCELCOL_ROLE = 'excelcol_role';
     const EXCELCOL_PERMISSION_TYPE = 'excelcol_permission_type';
+    const EXCELCOL_SORT_TYPE = 'excelcol_sort_type';
     
     
     const ERROR_ROW_NUMBER = "row";
