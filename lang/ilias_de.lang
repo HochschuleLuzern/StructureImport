@@ -93,9 +93,9 @@ config_group_closed#:#Gruppe geschlossen
 config_order_type#:#Sortierung
 config_sort_by_title#:#Titel
 config_sort_by_manual#:#Manuell
-config_sort_by_activation#:#Aktivierung
-config_sort_by_inherit#:#Geerbt
-config_sort_by_creation#:#Erstellt am
+config_sort_by_activation#:#Zeitvorgaben
+config_sort_by_inherit#:#Erben
+config_sort_by_creation#:#Datum
 config_ignore_duplicate#:#Ignoriere Objekte mit dem selben Namen
 config_only_check_name_for_duplicate#:#Verhindere Objekte mit dem selben Namen im Container
 config_check_name_and_type_for_duplicate#:#Verhindere Objekte mit dem selben Namen und Typ im Container

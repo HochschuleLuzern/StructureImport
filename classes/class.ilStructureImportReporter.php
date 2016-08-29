@@ -4,8 +4,6 @@ include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHoo
 include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilImportExcel.php';
 include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportReporterTableGUI.php';
 
-include_once './Services/Form/classes/class.ilPropertyFormGUI.php';
-
 
 class ilStructureImportReporter
 {
@@ -33,6 +31,8 @@ class ilStructureImportReporter
 	
 	function __construct()
 	{
+	    include_once './Services/Form/classes/class.ilPropertyFormGUI.php';
+	    
 	    global $ilCtrl;
 	    
 	    $this->ctrl = &$ilCtrl;
