@@ -3,6 +3,7 @@
 
 include_once 'Services/Component/classes/class.ilPluginConfigGUI.php';
 include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportConfig.php';
+include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportConstants.php';
 
 
 /**
@@ -152,7 +153,7 @@ class ilStructureImportConfigGUI extends ilPluginConfigGUI {
         foreach($module_list as $module_name => $module_data)
         {
             $filename = $module_data['filename'];
-            $path = ilStructureImportTabContentGUI::PATH_TO_ACTION_MODULES . $filename;
+            $path = ilStructureImportConstants::PATH_TO_ACTION_MODULES . $filename;
             if(is_file($path))
             {
                 include_once $path;
@@ -180,27 +181,27 @@ class ilStructureImportConfigGUI extends ilPluginConfigGUI {
 	               'subelements' => array(
 	                   'subtype' => array(
 	                       'type' => ilTextInputGUI')))*/
-                ilStructureImportConfig::CONF_LOG_PATH => array(
+                ilStructureImportConstants::CONF_LOG_PATH => array(
                         'type' => 'ilTextInputGUI',
                         'info' => 'log_path_recomment'
                 ),
-                ilStructureImportConfig::CONF_LOG_LEVEL => array(
+                ilStructureImportConstants::CONF_LOG_LEVEL => array(
                         'type' => 'ilNumberInputGUI',
                         'info' => 'log_level_info'
 	            ),
-	            ilStructureImportConfig::CONF_AVOID_DUPLICATE_CREATION => array(
+	            ilStructureImportConstants::CONF_AVOID_DUPLICATE_CREATION => array(
 	                    'type' => 'ilRadioGroupInputGUI',
 	                    'options' => array(
-	                            ilStructureImportConfig::CONF_IGNORE_DUPLICATE 
-	                               => ilStructureImportConfig::CONF_VAL_IGNORE,
-	                            ilStructureImportConfig::CONF_ONLY_CHECK_NAME_FOR_DUPLICATE 
-	                               => ilStructureImportConfig::CONF_VAL_CHECK_NAME,
-	                            ilStructureImportConfig::CONF_CHECK_NAME_AND_TYPE_FOR_DUPLICATE 
-	                               => ilStructureImportConfig::CONF_VAL_CHECK_NAME_AND_TYPE
+	                            ilStructureImportConstants::CONF_IGNORE_DUPLICATE 
+	                               => ilStructureImportConstants::CONF_VAL_IGNORE,
+	                            ilStructureImportConstants::CONF_ONLY_CHECK_NAME_FOR_DUPLICATE 
+	                               => ilStructureImportConstants::CONF_VAL_CHECK_NAME,
+	                            ilStructureImportConstants::CONF_CHECK_NAME_AND_TYPE_FOR_DUPLICATE 
+	                               => ilStructureImportConstants::CONF_VAL_CHECK_NAME_AND_TYPE
 	                            ),
 	                    'info' => 'avoid_duplicate_creation_info'	                    
 	            ),
-	            ilStructureImportConfig::CONF_INSTRUCTION_FILES_CONTAINER => array(
+	            ilStructureImportConstants::CONF_INSTRUCTION_FILES_CONTAINER => array(
 	                    'type' => 'ilTextInputGUI',
 	                    'info' => 'instruction_conf_info'
 	            )
@@ -250,7 +251,7 @@ class ilStructureImportConfigGUI extends ilPluginConfigGUI {
 		/*if (! isset(self::$cache[$key])) {
 			/** @var ilDB $ilDB 
 			global $ilDB;
-			$result = $ilDB->query('SELECT config_value FROM ' . self::TABLE_NAME . ' WHERE config_key = '
+			$result = $ilDB->query('SELECT config_value FROM ' . ilStructureImportConstants::TABLE_NAME . ' WHERE config_key = '
 				. $ilDB->quote($key, 'text'));
 			if ($result->numRows() == 0) {
 				return false;

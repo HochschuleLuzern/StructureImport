@@ -9,25 +9,11 @@ else
 	include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/lib/PHPExcel/PHPExcel.php';
 }
 
+include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportConstants.php';
+
+
 class ilImportExcel
-{
-    /* Name of excelcolumns in lang-file */
-    const EXCELCOL_COMMENT = 'excelcol_com';
-    const EXCELCOL_NAME = 'excelcol_name';
-    const EXCELCOL_PATH = 'excelcol_path';
-    const EXCELCOL_ACTION = 'excelcol_action';
-    const EXCELCOL_DESCRIPTION = 'excelcol_description';
-    const EXCELCOL_ACTION_OLD = 'excelcol_action_old';
-    const EXCELCOL_TYPE_OLD = 'excelcol_type_old';
-    const EXCELCOL_LOGIN = 'excelcol_login';
-    const EXCELCOL_ROLE = 'excelcol_role';
-    const EXCELCOL_PERMISSION_TYPE = 'excelcol_permission_type';
-    const EXCELCOL_SORT_TYPE = 'excelcol_sort_type';
-    
-    
-    const ERROR_ROW_NUMBER = "row";
-    const ERROR_TEXT = "errortext";
-    
+{    
 	private $excel_errors = array();
 	private $excel_header_row = array();
 	private $excel_sheet;
@@ -120,7 +106,7 @@ class ilImportExcel
 		{
 			switch($option)
 			{
-				case $this->plugin->txt(self::EXCELCOL_COMMENT):
+				case $this->plugin->txt(ilStructureImportConstants::EXCELCOL_COMMENT):
 					$this->comment_row_enabled = true;
 					break;
 			}
@@ -228,9 +214,9 @@ class ilImportExcel
 		/* If is old fileversion -> convert to new */
 		if($this->is_old_fileversion)
 		{
-			$action = $row[$this->plugin->txt(self::EXCELCOL_ACTION)]  . ': ' . $row[$this->plugin->txt(self::EXCELCOL_TYPE_OLD)];
-			$row[$this->plugin->txt(self::EXCELCOL_ACTION)] = $action;
-			unset($row[$this->plugin->txt(self::EXCELCOL_TYPE_OLD)]);
+			$action = $row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_ACTION)]  . ': ' . $row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_TYPE_OLD)];
+			$row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_ACTION)] = $action;
+			unset($row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_TYPE_OLD)]);
 		}
 		
 		return $row;
@@ -240,7 +226,7 @@ class ilImportExcel
 	{
 		$ret = false;
 		
-		if(in_array($this->plugin->txt(self::EXCELCOL_TYPE_OLD), $header))
+		if(in_array($this->plugin->txt(ilStructureImportConstants::EXCELCOL_TYPE_OLD), $header))
 		{
 			$ret = true;
 		}
@@ -252,7 +238,7 @@ class ilImportExcel
 	{
 		$ret = false;
 		
-		if($this->comment_row_enabled && strlen($row[$this->plugin->txt(self::EXCELCOL_COMMENT)]) != 0)
+		if($this->comment_row_enabled && strlen($row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_COMMENT)]) != 0)
 		{
 			$ret = true;
 		}

@@ -27,7 +27,7 @@ class ilStructureImportCreateFolder extends ilStructureImportCreate
 		
 		/* Init */
 		$status = 0;
-		$folder_permission = $row[$this->plugin->txt(ilImportExcel::EXCELCOL_PERMISSION_TYPE)];
+		$folder_permission = $row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_PERMISSION_TYPE)];
 		
 		/* Create object */
 		$folder_obj = new ilObjFolder();

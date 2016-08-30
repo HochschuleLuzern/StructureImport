@@ -3,16 +3,17 @@ include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHoo
 include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportDBManager.php';
 include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilImportExcel.php';
 include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportReporterTableGUI.php';
+include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportConstants.php';
 
 
 class ilStructureImportReporter
 {
 	const ERRORMSG = "msg_error";
-	const NAME = ilImportExcel::EXCELCOL_NAME;
-	const PATH = ilImportExcel::EXCELCOL_PATH;
-	const ACTION = ilImportExcel::EXCELCOL_ACTION;
-	const ACTIONOLD = ilImportExcel::EXCELCOL_ACTION_OLD;
-	const TYPEOLD = ilImportExcel::EXCELCOL_TYPE_OLD;
+	const NAME = ilStructureImportConstants::EXCELCOL_NAME;
+	const PATH = ilStructureImportConstants::EXCELCOL_PATH;
+	const ACTION = ilStructureImportConstants::EXCELCOL_ACTION;
+	const ACTIONOLD = ilStructureImportConstants::EXCELCOL_ACTION_OLD;
+	const TYPEOLD = ilStructureImportConstants::EXCELCOL_TYPE_OLD;
 	
 	private $structure_iImport_array;
 	private $header_row = array();
@@ -23,8 +24,8 @@ class ilStructureImportReporter
 	private $error_array = array();
 	private $executable_array = array();
 	
-	private $arr_create_header = array(0 => self::ACTION, 1 => self::PATH, 2 => self::NAME);
-	private $arr_assign_header = array(0 => ACTION, 1 => PATH, 2 => NAME);
+	/*private $arr_create_header = array(0 => self::ACTION, 1 => self::PATH, 2 => self::NAME);
+	private $arr_assign_header = array(0 => ACTION, 1 => PATH, 2 => NAME);*/
 	private $arr_error_header = array(0 => self::ERRORMSG, 1 => self::ACTION, 2 => self::PATH, 3 => self::NAME);
 	
 	public $error_message;
@@ -94,13 +95,13 @@ class ilStructureImportReporter
 			/* Get action of new version */
 			if($this->is_new_file_version)
 			{
-				$action = $this->structure_iImport_array[$i][$this->plugin->txt(ilImportExcel::EXCELCOL_ACTION)];
+				$action = $this->structure_iImport_array[$i][$this->plugin->txt(ilStructureImportConstants::EXCELCOL_ACTION)];
 			}
 			/* Get action of old version */
 			else
 			{
-				$actionold = $this->structure_iImport_array[$i][$this->plugin->txt(ilImportExcel::EXCELCOL_ACTION_OLD)];
-				$typeold = $this->structure_iImport_array[$i][$this->plugin->txt(ilImportExcel::EXCELCOL_TYPE_OLD)];
+				$actionold = $this->structure_iImport_array[$i][$this->plugin->txt(ilStructureImportConstants::EXCELCOL_ACTION_OLD)];
+				$typeold = $this->structure_iImport_array[$i][$this->plugin->txt(ilStructureImportConstants::EXCELCOL_TYPE_OLD)];
 				$action = $actionold . ': ' . $typeold;	
 			}
 			
@@ -126,7 +127,7 @@ class ilStructureImportReporter
 				if(in_array(NAME, $required_parameters))
 				{
 					
-					$name =	$this->structure_iImport_array[$i][$this->plugin->txt(ilImportExcel::EXCELCOL_NAME)];
+					$name =	$this->structure_iImport_array[$i][$this->plugin->txt(ilStructureImportConstants::EXCELCOL_NAME)];
 					$error_text .= ilStructureImportValidator::checkNameSyntax($name);
 				}
 				
@@ -134,7 +135,7 @@ class ilStructureImportReporter
 				if(in_array(PATH, $required_parameters))
 				{
 					
-					$path = $this->structure_iImport_array[$i][$this->plugin->txt(ilImportExcel::EXCELCOL_PATH)];
+					$path = $this->structure_iImport_array[$i][$this->plugin->txt(ilStructureImportConstants::EXCELCOL_PATH)];
 					$error_text .= ilStructureImportValidator::checkPathSyntax($path);
 				}
 								
@@ -176,8 +177,8 @@ class ilStructureImportReporter
 				$tmp_array = array();
 				$tmp_array['msg_error'] = $error_text;
 				$tmp_array['action'] = $action;
-				$tmp_array['path'] = $this->structure_iImport_array[$i][$this->plugin->txt(ilImportExcel::EXCELCOL_PATH)];
-				$tmp_array['name'] = $this->structure_iImport_array[$i][$this->plugin->txt(ilImportExcel::EXCELCOL_NAME)];
+				$tmp_array['path'] = $this->structure_iImport_array[$i][$this->plugin->txt(ilStructureImportConstants::EXCELCOL_PATH)];
+				$tmp_array['name'] = $this->structure_iImport_array[$i][$this->plugin->txt(ilStructureImportConstants::EXCELCOL_NAME)];
 				$this->error_array[$array_index] = $tmp_array;
 			}
 		}
@@ -188,8 +189,8 @@ class ilStructureImportReporter
 	 */
 	private function checkIfIsNewVersion($header_row)
 	{
-		$actionold = $this->plugin->txt(ilImportExcel::EXCELCOL_ACTION_OLD);
-		$typeold = $this->plugin->txt(ilImportExcel::EXCELCOL_TYPE_OLD);
+		$actionold = $this->plugin->txt(ilStructureImportConstants::EXCELCOL_ACTION_OLD);
+		$typeold = $this->plugin->txt(ilStructureImportConstants::EXCELCOL_TYPE_OLD);
 		if(in_array($actionold, $header_row) && in_array($typeold, $header_row))
 		{
 			$this->is_new_file_version = false;
@@ -212,8 +213,8 @@ class ilStructureImportReporter
 	    
 	    /* Add "Execute import!"-button */
 	    $link = $this->ctrl->getLinkTargetByClass(array(
-	            ilStructureImportTabContentGUI::STANDARD_BASE_CLASS,
-	            ilStructureImportTabContentGUI::STANDARD_CMD_CLASS	,
+	            ilStructureImportConstants::STANDARD_BASE_CLASS,
+	            ilStructureImportConstants::STANDARD_CMD_CLASS,
 	    ),'executeImport');
 	    $tpl->setVariable("LINK_TO_EXECUTE", $link);
 	    $tpl->setVariable("MSG_EXECUTE_IMPORT", $this->plugin->txt('button_execute_import'));

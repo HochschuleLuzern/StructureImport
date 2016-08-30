@@ -3,8 +3,8 @@
 /* Copyright (c) 1998-2010 ILIAS open source, Extended GPL, see docs/LICENSE */
 
 include_once("./Services/UIComponent/classes/class.ilUIHookPluginGUI.php");
-include_once("./Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportTabContentGUI.php");
 include_once("./Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportAccess.php");
+include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportConstants.php';
 
 /**
 * ilBacklinkUIHookGUI class
@@ -44,7 +44,7 @@ class ilStructureImportUIHookGUI extends ilUIHookPluginGUI {
         		{
             		    /* Check if cmd class is already from */
             		    $cmd_class = $ilCtrl->getCmdClass();
-            		    $is_already_in_content_class = $cmd_class == self::TAB_CONTENT_CLASS ? true: false;
+            		    $is_already_in_content_class = $cmd_class == ilStructureImportConstants::TAB_CONTENT_CLASS ? true: false;
             		    
             		    if(!$is_already_in_content_class)
             		    {
@@ -60,13 +60,13 @@ class ilStructureImportUIHookGUI extends ilUIHookPluginGUI {
 	{
 	    global $ilCtrl;
 	    
-	    $ilCtrl->setParameterByClass(ilStructureImportTabContentGUI::STANDARD_CMD_CLASS, 'ref_id', $ref_id);
+	    $ilCtrl->setParameterByClass(ilStructureImportConstants::STANDARD_CMD_CLASS, 'ref_id', $ref_id);
 	    $link = $ilCtrl->getLinkTargetByClass(array(
-	            ilStructureImportTabContentGUI::STANDARD_BASE_CLASS,
-	            ilStructureImportTabContentGUI::STANDARD_CMD_CLASS	,
+	            ilStructureImportConstants::STANDARD_BASE_CLASS,
+	            ilStructureImportConstants::STANDARD_CMD_CLASS	,
 	    ),'upload');
 	    $plugin = ilStructureImportPlugin::getInstance();
-	    $Tabs_GUI->addTab(ilStructureImportTabContentGUI::TAB_IMPORT_ID, $plugin->txt('tab_title'), $link);
+	    $Tabs_GUI->addTab(ilStructureImportConstants::TAB_IMPORT_ID, $plugin->txt('tab_title'), $link);
 	}
 }
 ?>

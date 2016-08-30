@@ -24,7 +24,7 @@ class ilStructureImportCreateGroup extends ilStructureImportCreate
 	    
 	    $this->type = 'grp';
 	    
-	    $this->group_type = $this->config->getValue(self::getModuleName(), self::GROUP_TYPE);
+	    $this->group_type = $this->config->getValue(self::getModuleName(), ilStructureImportConstants::GROUP_TYPE);
 	    $groupOwnerNotification = 'No';
 	}
 	
@@ -34,8 +34,8 @@ class ilStructureImportCreateGroup extends ilStructureImportCreate
 		
 		/* Init */
 		$status = 0;
-		$role = $row[$this->plugin->txt(ilImportExcel::EXCELCOL_ROLE)];
-		$user_string = $row[$this->plugin->txt(ilImportExcel::EXCELCOL_LOGIN)];
+		$role = $row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_ROLE)];
+		$user_string = $row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_LOGIN)];
 
 		/* Create object */
 		$group_obj = new ilObjGroup();
@@ -132,7 +132,7 @@ class ilStructureImportCreateGroup extends ilStructureImportCreate
 	    $parent_fields = parent::getConfFields();
 	    
 	    $child_fields = array(
-	            self::GROUP_TYPE => array(
+	            ilStructureImportConstants::GROUP_TYPE => array(
 	                    'type' => 'ilRadioGroupInputGUI',
 	                    'options' => array(
 	                            'group_open' => GRP_TYPE_PUBLIC,
@@ -160,7 +160,7 @@ class ilStructureImportCreateGroup extends ilStructureImportCreate
 	    $parent_values = parent::getDefaultConfigValues();
 	    
 	    $child_values = array(
-	            self::GROUP_TYPE => GRP_TYPE_CLOSED
+	            ilStructureImportConstants::GROUP_TYPE => GRP_TYPE_CLOSED
 	           );
 	    
 	    $default_values = $parent_values + $child_values;

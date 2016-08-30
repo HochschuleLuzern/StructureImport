@@ -13,12 +13,12 @@ abstract class ilStructureImportCreate extends ilStructureImportActionModuleBase
     {
         parent::__construct($log);
         
-        $this->order_type = $this->config->getValue(self::getModuleName(), self::CONF_ORDER_TYPE);
+        $this->order_type = $this->config->getValue(self::getModuleName(), ilStructureImportConstants::CONF_ORDER_TYPE);
     }
     
     public function executeAction($row, $root_ref, $current_ref)
     {
-        $path_string = $row[$this->plugin->txt(ilImportExcel::EXCELCOL_PATH)];
+        $path_string = $row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_PATH)];
         
         $this->log->write("Start searching following path: $path_string", 1);
         $new_ref = $this->findPath($root_ref, $current_ref, $path_string);
@@ -42,8 +42,8 @@ abstract class ilStructureImportCreate extends ilStructureImportActionModuleBase
         $status = 0;
         
         /* Init  */
-        $title = $row[$this->plugin->txt(ilImportExcel::EXCELCOL_NAME)];
-        $description = $row[$this->plugin->txt(ilImportExcel::EXCELCOL_DESCRIPTION)];
+        $title = $row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_NAME)];
+        $description = $row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_DESCRIPTION)];
         
         /* Check permissions */
         $status = self::checkPermissions($container_ref, $this->type);
@@ -74,7 +74,7 @@ abstract class ilStructureImportCreate extends ilStructureImportActionModuleBase
                 
                 /* Other options */
                 // Set sortmode by input or configuration
-                $sort_type = $this->getOrderTypeIndex($row[$this->plugin->txt(ilImportExcel::EXCELCOL_SORT_TYPE)]);
+                $sort_type = $this->getOrderTypeIndex($row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_SORT_TYPE)]);
                 
                 // Some containers need to do this with a settings object, and some containers can do this direct
                 include_once('Services/Container/classes/class.ilContainerSortingSettings.php');
@@ -134,16 +134,16 @@ abstract class ilStructureImportCreate extends ilStructureImportActionModuleBase
         
         $status = 0;
         
-        $check = $this->config->getValue(ilStructureImportConfig::CONF_MAIN_SETTINGS, 
-                                         ilStructureImportConfig::CONF_AVOID_DUPLICATE_CREATION);
+        $check = $this->config->getValue(ilStructureImportConstants::CONF_MAIN_SETTINGS, 
+                                         ilStructureImportConstants::CONF_AVOID_DUPLICATE_CREATION);
         
-        if($check != ilStructureImportConfig::CONF_VAL_IGNORE)
+        if($check != ilStructureImportConstants::CONF_VAL_IGNORE)
         {      
             foreach($tree->getChildIds($container_ref) as $child_ref_id)
             {
                 $child_object_id = ilObject::_lookupObjectId($child_ref_id);
                 $child_title = ilObject::_lookupTitle($child_object_id);
-                if($check == ilStructureImportConfig::CONF_VAL_CHECK_NAME_AND_TYPE)
+                if($check == ilStructureImportConstants::CONF_VAL_CHECK_NAME_AND_TYPE)
                 {
                     $child_type = ilObject::_lookupType($child_object_id);
                     if($title == $child_title && $type == $child_type)
@@ -151,7 +151,7 @@ abstract class ilStructureImportCreate extends ilStructureImportActionModuleBase
                         $status = $child_ref_id;
                     }
                 }
-                else if($check == ilStructureImportConfig::CONF_VAL_CHECK_NAME && $title == $child_title)
+                else if($check == ilStructureImportConstants::CONF_VAL_CHECK_NAME && $title == $child_title)
                 {
                     $status = $child_ref_id;
                 }
@@ -235,7 +235,7 @@ abstract class ilStructureImportCreate extends ilStructureImportActionModuleBase
 	    $plugin = ilStructureImportPlugin::getInstance();
 	    
 	    $fields = array(
-	            self::CONF_ORDER_TYPE => array(
+	            ilStructureImportConstants::CONF_ORDER_TYPE => array(
 	                    'type' => 'ilSelectInputGUI',
 	                    'options' => array(
 	                            ilContainer::SORT_TITLE => $plugin->txt('config_sort_by_title'),
@@ -256,7 +256,7 @@ abstract class ilStructureImportCreate extends ilStructureImportActionModuleBase
 	    
 	    $child_values = array(
 	            //$key => $value
-	            self::CONF_ORDER_TYPE => ilContainer::SORT_TITLE
+	            ilStructureImportConstants::CONF_ORDER_TYPE => ilContainer::SORT_TITLE
 	    );
 	    
 	    $default_values = $parent_values + $child_values;

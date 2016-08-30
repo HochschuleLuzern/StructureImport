@@ -1,5 +1,6 @@
 <?php
 include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportDBManager.php';
+include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportConstants.php';
 
 /**
  * ilLiveVotingConfig
@@ -29,7 +30,7 @@ class ilStructureImportConfig {
 	/**
 	 * @var string
 	 */
-	protected $table_name = ilStructureImportDBManager::TABLE_CONF_NAME;
+	protected $table_name = ilStructureImportConstants::TABLE_CONF_NAME;
 	/**
 	 * @var array
 	 */

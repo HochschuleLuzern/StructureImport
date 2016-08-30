@@ -1,4 +1,5 @@
 <?php
+include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportConstants.php';
 
 class ilStructureImportDBManager
 {
@@ -33,10 +34,10 @@ class ilStructureImportDBManager
 		global $ilDB;
 		
 		/* SQL-Statements */
-		$this->select_module_types_destinct = 'SELECT DISTINCT ' . self::COL_ACTION_TYPE . ' FROM ' . self::TABLE_MODULES_NAME;
-		$this->select_module_name = 'SELECT * FROM ' . self::TABLE_MODULES_NAME . ' WHERE ' . self::COL_MODULE_NAME . ' = "%s"';
-		$this->select_all_modules = 'SELECT * FROM '  . self::TABLE_MODULES_NAME . ' WHERE 1';
-		$this->select_count_modules = 'SELECT COUNT('. self::COL_MODULE_NAME . ') as count FROM ' . self::TABLE_MODULES_NAME;
+		$this->select_module_types_destinct = 'SELECT DISTINCT ' . ilStructureImportConstants::COL_ACTION_TYPE . ' FROM ' . ilStructureImportConstants::TABLE_MODULES_NAME;
+		$this->select_module_name = 'SELECT * FROM ' . ilStructureImportConstants::TABLE_MODULES_NAME . ' WHERE ' . ilStructureImportConstants::COL_MODULE_NAME . ' = "%s"';
+		$this->select_all_modules = 'SELECT * FROM '  . ilStructureImportConstants::TABLE_MODULES_NAME . ' WHERE 1';
+		$this->select_count_modules = 'SELECT COUNT('. ilStructureImportConstants::COL_MODULE_NAME . ') as count FROM ' . ilStructureImportConstants::TABLE_MODULES_NAME;
 		
 		$this->db = $ilDB;
 		$this->plugin = ilStructureImportPlugin::getInstance();
@@ -82,7 +83,7 @@ class ilStructureImportDBManager
 			$res = $this->db->query($this->select_all_modules);
 			while($row = $this->db->fetchAssoc($res))
 			{
-				$module_name = $row[self::COL_MODULE_NAME];
+				$module_name = $row[ilStructureImportConstants::COL_MODULE_NAME];
 				if($this->plugin->txt($module_name) == $action)
 				{
 					$ret = $module_name;
@@ -108,7 +109,7 @@ class ilStructureImportDBManager
 		$res = $this->db->query($this->select_all_modules);
 		while($row = $this->db->fetchAssoc($res))
 		{
-			$arr_space = $row[self::COL_MODULE_NAME];
+			$arr_space = $row[ilStructureImportConstants::COL_MODULE_NAME];
 			$cache_table_modules[$arr_space] = $row;
 		}
 		
@@ -125,14 +126,14 @@ class ilStructureImportDBManager
 
 		if($this->cache_table_module[$moduleName] != NULL)
 		{
-			$ret = $this->cache_table_modules[$moduleName][self::COL_ACTION_TYPE];
+			$ret = $this->cache_table_modules[$moduleName][ilStructureImportConstants::COL_ACTION_TYPE];
 		}
 		else
 		{
 			$query = sprintf($this->select_module_name, $moduleName);
 			$res = $this->db->query($query);
 			$row = $this->db->fetchAssoc($res);
-			$ret = $row[self::COL_ACTION_TYPE];
+			$ret = $row[ilStructureImportConstants::COL_ACTION_TYPE];
 		}
 	
 		return $ret;
@@ -148,7 +149,7 @@ class ilStructureImportDBManager
 
 		if($this->cache_table_module[$moduleName] != NULL)
 		{
-			$ret = $this->cache_table_modules[$moduleName][self::COL_REQUIRED_PARAMETERS];
+			$ret = $this->cache_table_modules[$moduleName][ilStructureImportConstants::COL_REQUIRED_PARAMETERS];
 		}
 		else
 		{
@@ -156,7 +157,7 @@ class ilStructureImportDBManager
 			$res = $this->db->query($query);
 			$row = $this->db->fetchAssoc($res);
 			$this->cache_action_types[$moduleName] = $row;
-			$ret = $row[self::COL_REQUIRED_PARAMETERS];
+			$ret = $row[ilStructureImportConstants::COL_REQUIRED_PARAMETERS];
 		}
 		
 		return $ret;
@@ -173,7 +174,7 @@ class ilStructureImportDBManager
 
 		if($this->cache_table_module[$moduleName] != NULL)
 		{
-			$ret = $this->cache_table_modules[$moduleName][self::COL_OPTIONAL_PARAMETERS];
+			$ret = $this->cache_table_modules[$moduleName][ilStructureImportConstants::COL_OPTIONAL_PARAMETERS];
 		}
 		else
 		{
@@ -181,7 +182,7 @@ class ilStructureImportDBManager
 			$res = $this->db->query($query);
 			$row = $this->db->fetchAssoc($res);
 			$this->cache_action_types[$moduleName] = $row;
-			$ret = $row[self::COL_OPTIONAL_PARAMETERS];
+			$ret = $row[ilStructureImportConstants::COL_OPTIONAL_PARAMETERS];
 		}
 		
 		return $ret;
@@ -192,7 +193,7 @@ class ilStructureImportDBManager
 		$ret = "";
 		if($this->cache_table_modules[$moduleName] != NULL)
 		{
-			$ret = $this->cache_table_modules[$module_name][self::COL_FILENAME];
+			$ret = $this->cache_table_modules[$module_name][ilStructureImportConstants::COL_FILENAME];
 		}
 		else 
 		{
@@ -201,7 +202,7 @@ class ilStructureImportDBManager
 			if($row = $this->db->fetchAssoc($res))
 			{
     			$this->cache_action_types[$module_name] = $row;
-    			$ret = $row[self::COL_FILENAME];
+    			$ret = $row[ilStructureImportConstants::COL_FILENAME];
 			}
 		}
 		
@@ -218,7 +219,7 @@ class ilStructureImportDBManager
 			$i = 0;
 			while($row = $this->db->fetchAssoc($res))
 			{
-				$this->cache_action_types[$i] = $row[self::COL_ACTION_TYPE]; 
+				$this->cache_action_types[$i] = $row[ilStructureImportConstants::COL_ACTION_TYPE]; 
 				$i++;
 			}
 		}
@@ -233,9 +234,9 @@ class ilStructureImportDBManager
 		
 		foreach($this->_lookupAllModules() as $module)
 		{
-			if($module[self::COL_REQUIRED_PARAMETERS] != null)
+			if($module[ilStructureImportConstants::COL_REQUIRED_PARAMETERS] != null)
 			{
-				$module_required_parameters = explode(';', $module[self::COL_REQUIRED_PARAMETERS]);
+				$module_required_parameters = explode(';', $module[ilStructureImportConstants::COL_REQUIRED_PARAMETERS]);
 				
 				foreach($module_required_parameters as $parameter)
 				{
@@ -259,38 +260,38 @@ class ilStructureImportDBManager
 			$module_id = -1;
 			foreach($this->cache_table_modules as $module_in_db)
 			{
-				if($module_in_db[self::COL_MODULE_NAME] == $module_from_file[self::COL_MODULE_NAME])
+				if($module_in_db[ilStructureImportConstants::COL_MODULE_NAME] == $module_from_file[ilStructureImportConstants::COL_MODULE_NAME])
 				{
-					$module_id = $module_in_db[self::COL_MODULE_ID];
+					$module_id = $module_in_db[ilStructureImportConstants::COL_MODULE_ID];
 				}
 			}
 			
 			
 			$fields = array(
-					self::COL_MODULE_NAME => array("text", $module_from_file[self::COL_MODULE_NAME]),
-					self::COL_ACTION_TYPE => array("text", $module_from_file[self::COL_ACTION_TYPE]),
-					self::COL_ACTION_LANG_NAME => array("text", $module_from_file[self::COL_ACTION_LANG_NAME]),
-					self::COL_REQUIRED_PARAMETERS => array("text", $module_from_file[self::COL_REQUIRED_PARAMETERS]),
-					self::COL_OPTIONAL_PARAMETERS => array("text", $module_from_file[self::COL_OPTIONAL_PARAMETERS]),
-					self::COL_FILENAME => array("text", $module_from_file[self::COL_FILENAME])
+					ilStructureImportConstants::COL_MODULE_NAME => array("text", $module_from_file[ilStructureImportConstants::COL_MODULE_NAME]),
+					ilStructureImportConstants::COL_ACTION_TYPE => array("text", $module_from_file[ilStructureImportConstants::COL_ACTION_TYPE]),
+					ilStructureImportConstants::COL_ACTION_LANG_NAME => array("text", $module_from_file[ilStructureImportConstants::COL_ACTION_LANG_NAME]),
+					ilStructureImportConstants::COL_REQUIRED_PARAMETERS => array("text", $module_from_file[ilStructureImportConstants::COL_REQUIRED_PARAMETERS]),
+					ilStructureImportConstants::COL_OPTIONAL_PARAMETERS => array("text", $module_from_file[ilStructureImportConstants::COL_OPTIONAL_PARAMETERS]),
+					ilStructureImportConstants::COL_FILENAME => array("text", $module_from_file[ilStructureImportConstants::COL_FILENAME])
 			);
 			if($module_id > 0)
 			{
 				// Update
 				$this->db->update(
-							self::TABLE_MODULES_NAME,
+							ilStructureImportConstants::TABLE_MODULES_NAME,
 							$fields,
-							array(self::COL_MODULE_ID => array('integer', $module_id))
+							array(ilStructureImportConstants::COL_MODULE_ID => array('integer', $module_id))
 						);
 			}
 			else
 			{
 				$this->number_of_modules++;
-				$fields[self::COL_MODULE_ID] = array("integer", $this->number_of_modules);
+				$fields[ilStructureImportConstants::COL_MODULE_ID] = array("integer", $this->number_of_modules);
 				
 				// Insert				
 				$this->db->insert(
-							self::TABLE_MODULES_NAME, 
+							ilStructureImportConstants::TABLE_MODULES_NAME, 
 							$fields
 						);
 			}
@@ -302,7 +303,7 @@ class ilStructureImportDBManager
 					"optional_parameters" => array("integer", $module['optionalParameters'])
 				);
 		
-		$ilDB->insert(self::TABLE_MODULES_NAME, $fields);*/
+		$ilDB->insert(ilStructureImportConstants::TABLE_MODULES_NAME, $fields);*/
 	}
 }
 

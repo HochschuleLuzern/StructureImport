@@ -23,7 +23,7 @@ class ilStructureImportAssignRole extends ilStructureImportActionModuleBase
 	 */
 	public function executeAction($row, $root_ref, $current_ref)
 	{
-	    $path_string = $row[$this->plugin->txt(ilImportExcel::EXCELCOL_PATH)];
+	    $path_string = $row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_PATH)];
 	    $this->log->write("Start searching following path: $path_string", 1);
 		$new_ref = $this->findPath($root_ref, $current_ref, $path_string);
 		
@@ -41,8 +41,8 @@ class ilStructureImportAssignRole extends ilStructureImportActionModuleBase
 	    global $ilias;
 	    
 	    $status = 0;
-	    $role = $row[$this->plugin->txt(ilImportExcel::EXCELCOL_ROLE)];
-		$user_string = $row[$this->plugin->txt(ilImportExcel::EXCELCOL_LOGIN)];
+	    $role = $row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_ROLE)];
+		$user_string = $row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_LOGIN)];
 	    $user_array = explode(',', $user_string);
 
 	    $object = $ilias->obj_factory->getInstanceByRefId($object_ref);

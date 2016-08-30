@@ -4,6 +4,7 @@ include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHoo
 include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportPlugin.php';
 include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportDBManager.php';
 include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportConfig.php';
+include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportConstants.php';
 
 include_once './Services/Object/classes/class.ilObjectListGUIFactory.php';
 include_once './Services/Logging/classes/class.ilLog.php';
@@ -117,13 +118,13 @@ class ilStructureImportTabContentGUI
 		$this->tabs->setBackTarget($this->plugin->txt('tab_back_link'), $back_link);		
 		
 		/* Create and add tab with link to addon description */
-		$this->ctrl->setParameterByClass(self::STANDARD_CMD_CLASS, 'ref_id', $this->ref_id);
+		$this->ctrl->setParameterByClass(ilStructureImportConstants::STANDARD_CMD_CLASS, 'ref_id', $this->ref_id);
 		$instrunction_link = $this->ctrl->getLinkTargetByClass(array(
-					self::STANDARD_BASE_CLASS,
-					self::STANDARD_CMD_CLASS,
+					ilStructureImportConstants::STANDARD_BASE_CLASS,
+					ilStructureImportConstants::STANDARD_CMD_CLASS,
 			),'showInstruction');
 		$class_name = $this->obj_def->getClassName($this->obj->getType());
-		$this->tabs->addTab(self::TAB_INSTRUCTION_ID, $this->plugin->txt('tab_instruction'), $instrunction_link);
+		$this->tabs->addTab(ilStructureImportConstants::TAB_INSTRUCTION_ID, $this->plugin->txt('tab_instruction'), $instrunction_link);
 		
 		/* Add Tab for Upload */
 		ilStructureImportUIHookGUI::getStructureImportTab($this->tabs, $this->ref_id);
@@ -131,13 +132,13 @@ class ilStructureImportTabContentGUI
 		/* Add UpdateDB Button*/
 		if($this->is_admin)
 		{
-    		$this->ctrl->setParameterByClass(self::STANDARD_CMD_CLASS, 'ref_id', $this->ref_id);
+    		$this->ctrl->setParameterByClass(ilStructureImportConstants::STANDARD_CMD_CLASS, 'ref_id', $this->ref_id);
     		$instrunction_link = $this->ctrl->getLinkTargetByClass(array(
-    		        self::STANDARD_BASE_CLASS,
-    		        self::STANDARD_CMD_CLASS,
+    		        ilStructureImportConstants::STANDARD_BASE_CLASS,
+    		        ilStructureImportConstants::STANDARD_CMD_CLASS,
     		),'updateDB');
     		$class_name = $this->obj_def->getClassName($this->obj->getType());
-    		$this->tabs->addTab(self::TAB_UPDATE_DB, $this->plugin->txt('tab_update_db'), $instrunction_link);
+    		$this->tabs->addTab(ilStructureImportConstants::TAB_UPDATE_DB, $this->plugin->txt('tab_update_db'), $instrunction_link);
 		}
 		/*$this->ctrl->setParameterByClass(get_class($this), 'ref_id', $this->ref_id);
 		$main_link = $this->ctrl->getLinkTargetByClass(array(
@@ -145,19 +146,19 @@ class ilStructureImportTabContentGUI
 		         get_class($this),
 		),'upload');
 		$tabtitle = $this->plugin->txt('tab_title');
-		$this->tabs->addTab(self::TAB_IMPORT_ID, $tabtitle, $main_link);*/
+		$this->tabs->addTab(ilStructureImportConstants::TAB_IMPORT_ID, $tabtitle, $main_link);*/
 		
 		/*$force_active = ($_GET["cmd"] == "showInstruction")
 		? true
 		: false;
 		$this->tabs->addTarget($this->plugin->txt('tab_instruction'),
-		        $instrunction_link, "self::TAB_INSTRUCTION_ID", get_class($this)
+		        $instrunction_link, "ilStructureImportConstants::TAB_INSTRUCTION_ID", get_class($this)
 		        , "", $force_active);*/
 	}
 	
 	private function showReport()
 	{		
-	    $this->tabs->activateTab(self::TAB_IMPORT_ID);
+	    $this->tabs->activateTab(ilStructureImportConstants::TAB_IMPORT_ID);
 		$filedir = $this->checkFileUpload();
 		
 		if($filedir != -1)
@@ -234,9 +235,9 @@ class ilStructureImportTabContentGUI
 			        $this->filename = ilUtil::stripSlashes($file['name']);
 			        $size = ilUtil::stripSlashes($file["size"]);
 			        $temp_name = $file["tmp_name"];
-			        $filedir = self::IMPORT_FILEDIR . $this->filename;
+			        $filedir = ilStructureImportConstants::IMPORT_FILEDIR . $this->filename;
 			        ilUtil::moveUploadedFile($temp_name, $this->filename, $filedir);
-			        $this->ctrl->setParameter($this, self::IMPORT_FILENAME, urlencode($this->filename));
+			        $this->ctrl->setParameter($this, ilStructureImportConstants::IMPORT_FILENAME, urlencode($this->filename));
 			        $status = $filedir;
 			    }
 			    catch (Exception $e)
@@ -308,7 +309,7 @@ class ilStructureImportTabContentGUI
 	
 	private function updateDB()
 	{
-	    $this->tabs->activateTab(self::TAB_UPDATE_DB);
+	    $this->tabs->activateTab(ilStructureImportConstants::TAB_UPDATE_DB);
 		$updated_modules = $this->plugin->updateModuleDB();
 		
 		$html = '<h1>'.$this->plugin->txt('msg_modules_in_db').'</h1>';
@@ -316,7 +317,7 @@ class ilStructureImportTabContentGUI
 		
 		foreach($updated_modules as $module)
 		{
-		    $module_name = $module[ilStructureImportDBManager::COL_MODULE_NAME];
+		    $module_name = $module[ilStructureImportConstants::COL_MODULE_NAME];
 		    $html .= '<li>' . $module_name . ' (' . $this->plugin->txt($module_name) . ')</li><br>';
 		}
 		$html .= '</ul>';
@@ -325,22 +326,22 @@ class ilStructureImportTabContentGUI
 	
 	private function executeImport()
 	{
-	    $this->tabs->activateTab(self::TAB_IMPORT_ID);
-		$filename = urldecode($_GET[self::IMPORT_FILENAME]);
-		$filedir = self::IMPORT_FILEDIR . $filename;
+	    $this->tabs->activateTab(ilStructureImportConstants::TAB_IMPORT_ID);
+		$filename = urldecode($_GET[ilStructureImportConstants::IMPORT_FILENAME]);
+		$filedir = ilStructureImportConstants::IMPORT_FILEDIR . $filename;
 		
 		if(is_file($filedir))
 		{
 		    /* Create logfile */
 		    $logfilename = date('Ymdhi') . '_' . $this->user->getId() . '.log';
-		    $this->logfile_dir = $this->config->getValue(ilStructureImportConfig::CONF_MAIN_SETTINGS, 
-	                                                     ilStructureImportConfig::CONF_LOG_PATH);
+		    $this->logfile_dir = $this->config->getValue(ilStructureImportConstants::CONF_MAIN_SETTINGS, 
+	                                                     ilStructureImportConstants::CONF_LOG_PATH);
 		    if(is_dir($this->logfile_dir)==null)
 		    {
-		        $this->logfile_dir = self::DEFAULT_LOGFILE_DIR;
+		        $this->logfile_dir = ilStructureImportConstants::DEFAULT_LOGFILE_DIR;
 		    }
-		    $log_level = $this->config->getValue(ilStructureImportConfig::CONF_MAIN_SETTINGS,
-		                                         ilStructureImportConfig::CONF_LOG_LEVEL);
+		    $log_level = $this->config->getValue(ilStructureImportConstants::CONF_MAIN_SETTINGS,
+		                                         ilStructureImportConstants::CONF_LOG_LEVEL);
 		    $this->log = new ilLog($this->logfile_dir , $logfilename, 'Structure Import', true, $log_level);
 		    $this->log->write('Start logging', 1);
 		    
@@ -372,7 +373,7 @@ class ilStructureImportTabContentGUI
     			$row = $import_array[$i];
     				
     			/* Get module name */
-    			$action = $row[$this->plugin->txt(ilImportExcel::EXCELCOL_ACTION)];
+    			$action = $row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_ACTION)];
     			$module_name = $db_manager->_lookupModuleName($action);
     			if($module_name != '')
     			{
@@ -383,7 +384,7 @@ class ilStructureImportTabContentGUI
         				
         				$tmp = str_replace('class.', '', $filename);
         				$class_name = str_replace('.php', '', $tmp);
-        				$action_module_dir = self::PATH_TO_ACTION_MODULES . $filename;
+        				$action_module_dir = ilStructureImportConstants::PATH_TO_ACTION_MODULES . $filename;
         				if(is_file($action_module_dir))
         				{
         					include_once($action_module_dir);
@@ -436,7 +437,7 @@ class ilStructureImportTabContentGUI
 	{
 		include_once('Services/Form/classes/class.ilPropertyFormGUI.php');
 		
-		$this->tabs->activateTab(self::TAB_IMPORT_ID);
+		$this->tabs->activateTab(ilStructureImportConstants::TAB_IMPORT_ID);
 		
 		$this->form_gui = new ilPropertyFormGUI();
 		$this->form_gui->setFormAction($this->ctrl->getFormAction($this, "showReport"));
@@ -450,14 +451,14 @@ class ilStructureImportTabContentGUI
 	
 	private function showInstruction()
 	{
-	    $this->tabs->activateTab(self::TAB_INSTRUCTION_ID);
+	    $this->tabs->activateTab(ilStructureImportConstants::TAB_INSTRUCTION_ID);
 	    
 	    $tpl = new ilTemplate("tpl.instruction_main.html", true, true, "Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport");
 	    
 	    $tpl->setCurrentBlock("intro");
 	    $tpl->setVariable("INSTRUCTION_TITLE", $this->plugin->txt("instruction_main_title"));
 	    $tpl->setVariable("INSTRUCTION_TEXT", $this->plugin->txt("instruction_main_text"));
-	    $link = $this->config->getValue(ilStructureImportConfig::CONF_MAIN_SETTINGS, ilStructureImportConfig::CONF_INSTRUCTION_FILES_CONTAINER);
+	    $link = $this->config->getValue(ilStructureImportConfig::CONF_MAIN_SETTINGS, ilStructureImportConstants::CONF_INSTRUCTION_FILES_CONTAINER);
 	    if($link != null)
 	    {
 	        $html_link = "<a href='$link'>".$this->plugin->txt("instruction_link_to_documents")."</a>";

@@ -37,8 +37,8 @@ class ilStructureImportCreateCourse extends ilStructureImportCreate
 		
 		/* Init */
 		$status = 0;
-		$role = $row[$this->plugin->txt(ilImportExcel::EXCELCOL_ROLE)];
-		$user_string = $row[$this->plugin->txt(ilImportExcel::EXCELCOL_LOGIN)];
+		$role = $row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_ROLE)];
+		$user_string = $row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_LOGIN)];
 		
 		/* Values from the old structure import
 		$courseSort = 'Title';
@@ -149,7 +149,7 @@ class ilStructureImportCreateCourse extends ilStructureImportCreate
 	    
 	    $child_fields = array();
 	    /*$child_fields = array(
-	            self::CRS_ACTIVATION_TYPE => array(
+	            ilStructureImportConstants::CRS_ACTIVATION_TYPE => array(
 	                    'type' => 'ilRadioGroupInputGUI',
 	                    'options' => array(
 	                            'crs_activation_offline' => IL_CRS_ACTIVATION_OFFLINE,

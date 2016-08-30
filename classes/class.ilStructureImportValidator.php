@@ -1,17 +1,8 @@
 <?php
+include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportConstants.php';
 
 class ilStructureImportValidator
-{
-	const REGEXPATH = "*";
-	const REGEXNAME = "/^[A-Za-z0-9\ ÄäÖöÜü]{3,255}$/";
-	const REGEXLOGIN = "*";
-	/*const ACTIONCREATECATEGORY = "";
-	const ACTIONCREATECOURSE = "";
-	const ACTIONCREATEFOLDER = "";
-	const ACTIONCREATEGROUP = "";
-	const ACTIONASSIGNROLE = "";
-	const ACTIONDELETE = "";*/
-	
+{	
 	/**
 	 * Checks the syntax of a name
 	 * 
@@ -25,7 +16,7 @@ class ilStructureImportValidator
 		{
 			$ret = "Name is empty?!";
 		}
-		else if(!preg_match(self::REGEXNAME, $name))
+		else if(!preg_match(ilStructureImportConstants::REGEXNAME, $name))
 		{
 			$ret = "Name does not follow syntax guideline";
 		}
@@ -58,7 +49,7 @@ class ilStructureImportValidator
 		{
 			
 		}
-		/*else if(!preg_match(REGEXPATH, $path))
+		/*else if(!preg_match(ilStructureImportConstants::REGEXPATH, $path))
 		{
 			$ret = "Path does not follow syntax guideline";
 		}*/

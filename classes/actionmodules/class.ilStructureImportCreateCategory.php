@@ -33,8 +33,8 @@ class ilStructureImportCreateCategory extends ilStructureImportCreate
 	    }
 	    
 	    /* Set translation */
-	    $title = $row[$this->plugin->txt(ilImportExcel::EXCELCOL_NAME)];
-	    $description = $row[$this->plugin->txt(ilImportExcel::EXCELCOL_DESCRIPTION)];
+	    $title = $row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_NAME)];
+	    $description = $row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_DESCRIPTION)];
 	    $category_obj->addTranslation($title, $description, $lng->getLangKey(), $lng->getLangKey());
 	    
 	    /* Apply changes */

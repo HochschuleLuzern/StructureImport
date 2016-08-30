@@ -1,6 +1,7 @@
 <?php
 include_once("./Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportPlugin.php");
 include_once './Services/Object/classes/class.ilObject.php';
+include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportConstants.php';
 
 class ilStructureImportAccess
 {
@@ -130,6 +131,7 @@ class ilStructureImportAccess
     /**
      * The function checkAccess from rbacsystem should only be used against types that are allowed as
      * subobject. Because for all not allowed subobjs the return will always be false (even for admins).
+     * So I just will get all allowed subtypes, before I check if the user has create access.
      * @param string    $type
      * @return array    $types_to_check
      */
