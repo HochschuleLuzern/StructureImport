@@ -79,7 +79,7 @@ error_link_missing#:#Kein Link vorhanden
 
 configuration_title#:#Strukturimport Einstellungen
 settings_from#:#Einstellungen von: 
-config_main_settings#:#Haupteinstellungen
+main_settings#:#Haupteinstellungen
 config_saved#:#Konfiguration gespeichert
 config_log_path#:#Pfad zum Logfile
 config_log_path_recomment#:#Empfohlen ist: "./Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/log/"

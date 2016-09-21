@@ -1,6 +1,4 @@
 <?php
-include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportConstants.php';
-
 class ilStructureImportDBManager
 {
     /* Attributes for the Module Table */

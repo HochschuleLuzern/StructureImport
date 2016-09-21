@@ -3,12 +3,9 @@ include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHoo
 include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportDBManager.php';
 include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilImportExcel.php';
 include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportReporterTableGUI.php';
-include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportConstants.php';
-
 
 class ilStructureImportReporter
 {
-	const ERRORMSG = "msg_error";
 	const NAME = ilStructureImportConstants::EXCELCOL_NAME;
 	const PATH = ilStructureImportConstants::EXCELCOL_PATH;
 	const ACTION = ilStructureImportConstants::EXCELCOL_ACTION;
@@ -26,7 +23,7 @@ class ilStructureImportReporter
 	
 	/*private $arr_create_header = array(0 => self::ACTION, 1 => self::PATH, 2 => self::NAME);
 	private $arr_assign_header = array(0 => ACTION, 1 => PATH, 2 => NAME);*/
-	private $arr_error_header = array(0 => self::ERRORMSG, 1 => self::ACTION, 2 => self::PATH, 3 => self::NAME);
+	private $arr_error_header = array(0 => ilStructureImportConstants::ERRORMSG, 1 => self::ACTION, 2 => self::PATH, 3 => self::NAME);
 	
 	public $error_message;
 	

@@ -1,7 +1,5 @@
 <?php
-
 include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/actiontypebase/class.ilStructureImportCreate.php';
-include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportPlugin.php';
 include_once './Services/Membership/classes/class.ilParticipants.php';
 include_once './Modules/Group/classes/class.ilGroupParticipants.php';
 include_once './Modules/Group/classes/class.ilObjGroup.php';
@@ -15,8 +13,6 @@ class ilStructureImportCreateGroup extends ilStructureImportCreate
 	protected static $required_parameters = 'action;name;path';
 	protected static $optional_parameters = 'description;members';
 	protected static $create_type = 'grp';
-	
-	const GROUP_TYPE = 'group_type';
 	
     public function __construct($log)
 	{

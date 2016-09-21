@@ -9,9 +9,6 @@ else
 	include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/lib/PHPExcel/PHPExcel.php';
 }
 
-include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportConstants.php';
-
-
 class ilImportExcel
 {    
 	private $excel_errors = array();

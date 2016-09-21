@@ -1,7 +1,6 @@
 <?php
 include_once("./Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportPlugin.php");
 include_once './Services/Object/classes/class.ilObject.php';
-include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportConstants.php';
 
 class ilStructureImportAccess
 {

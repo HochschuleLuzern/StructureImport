@@ -458,7 +458,7 @@ class ilStructureImportTabContentGUI
 	    $tpl->setCurrentBlock("intro");
 	    $tpl->setVariable("INSTRUCTION_TITLE", $this->plugin->txt("instruction_main_title"));
 	    $tpl->setVariable("INSTRUCTION_TEXT", $this->plugin->txt("instruction_main_text"));
-	    $link = $this->config->getValue(ilStructureImportConfig::CONF_MAIN_SETTINGS, ilStructureImportConstants::CONF_INSTRUCTION_FILES_CONTAINER);
+	    $link = $this->config->getValue(ilStructureImportConstants::CONF_MAIN_SETTINGS, ilStructureImportConstants::CONF_INSTRUCTION_FILES_CONTAINER);
 	    if($link != null)
 	    {
 	        $html_link = "<a href='$link'>".$this->plugin->txt("instruction_link_to_documents")."</a>";

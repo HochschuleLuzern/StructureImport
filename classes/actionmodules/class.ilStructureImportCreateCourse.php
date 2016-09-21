@@ -1,7 +1,6 @@
 <?php
-
+include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportConstants.php';
 include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/actiontypebase/class.ilStructureImportCreate.php';
-include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportPlugin.php';
 include_once './Modules/Course/classes/class.ilObjCourse.php';
 include_once './Modules/Course/classes/class.ilCourseConstants.php';
 include_once './Modules/Course/classes/class.ilCourseParticipants.php';
@@ -14,8 +13,6 @@ class ilStructureImportCreateCourse extends ilStructureImportCreate
 	protected static $required_parameters = 'action;name;path';
 	protected static $optional_parameters = 'description;members';
 	protected static $create_type = 'crs';
-	
-	const CRS_ACTIVATION_TYPE = 'crs_activation_type';
 	
     public function __construct($log)
 	{

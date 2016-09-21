@@ -3,7 +3,6 @@
 
 include_once 'Services/Component/classes/class.ilPluginConfigGUI.php';
 include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportConfig.php';
-include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportConstants.php';
 
 
 /**
@@ -13,8 +12,8 @@ include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHoo
  * @version $Id$
  *
  */
-class ilStructureImportConfigGUI extends ilPluginConfigGUI {
-
+class ilStructureImportConfigGUI extends ilPluginConfigGUI 
+{
 	/**
 	 * @var ilPropertyFormGUI
 	 */
@@ -147,7 +146,7 @@ class ilStructureImportConfigGUI extends ilPluginConfigGUI {
     {
         $module_fields = array();
         
-        $module_fields['main_settings'] = $this->getMainFields();
+        $module_fields[ilStructureImportConstants::CONF_MAIN_SETTINGS] = $this->getMainFields();
         
         $module_list = $this->db_manager->_lookupAllModules();
         foreach($module_list as $module_name => $module_data)

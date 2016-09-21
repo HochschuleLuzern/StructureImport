@@ -4,8 +4,6 @@ include_once './Services/Container/classes/class.ilContainer.php';
 
 abstract class ilStructureImportCreate extends ilStructureImportActionModuleBase
 {
-    const CONF_ORDER_TYPE = 'order_type';
-    
     protected $order_type;
     protected static $create_type = '';
     

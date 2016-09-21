@@ -1,7 +1,5 @@
 <?php
-
 include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/actiontypebase/class.ilStructureImportCreate.php';
-include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportPlugin.php';
 include_once ("Modules/Folder/classes/class.ilObjFolder.php");
 include_once ('./Services/AccessControl/classes/class.ilPostboxHelper.php');
 

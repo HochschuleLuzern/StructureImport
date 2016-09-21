@@ -37,7 +37,7 @@ class ilStructureImportPlugin extends ilUserInterfaceHookPlugin
 	
 	public function updateModuleDB()
 	{
-		$db_manager = ilStructureImportConstants::getInstance();
+		$db_manager = ilStructureImportDBManager::getInstance();
 		
 		// The name is $dir_content and not $files cause it can contain folders and files
 		$dir_content = scandir(ilStructureImportConstants::PATH_TO_ACTION_MODULES);

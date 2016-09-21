@@ -1,6 +1,5 @@
 <?php
 include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportDBManager.php';
-include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportConstants.php';
 
 /**
  * ilLiveVotingConfig
@@ -10,23 +9,8 @@ include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHoo
  *
  * @version $Id$
  */
-class ilStructureImportConfig {
-
-    /* Conf titles */
-    const CONF_MAIN_SETTINGS = 'main_settings';
-    const CONF_INSTRUCTION_FILES_CONTAINER = 'instruction_files_container';
-    const CONF_AVOID_DUPLICATE_CREATION = 'avoid_duplicate_creation';
-    const CONF_LOG_LEVEL = 'log_level';
-    const CONF_LOG_PATH = 'log_path';
-    const CONF_IGNORE_DUPLICATE = 'ignore_duplicate';
-    const CONF_ONLY_CHECK_NAME_FOR_DUPLICATE = 'only_check_name_for_duplicate';
-    const CONF_CHECK_NAME_AND_TYPE_FOR_DUPLICATE = 'check_name_and_type_for_duplicate';
-    
-    /* Conf values */
-    const CONF_VAL_IGNORE = 'ignore';
-    const CONF_VAL_CHECK_NAME = 'check_name';
-    const CONF_VAL_CHECK_NAME_AND_TYPE = 'check_name_and_type';
-    
+class ilStructureImportConfig 
+{
 	/**
 	 * @var string
 	 */
