@@ -1,9 +1,13 @@
 <!-- BEGIN structureimport_reporter -->
 <div class="structureimport_infobox">
-<p>{MSG_REP_INFOTEXT}<p><br>
-<a class='btn btn-default' href="{LINK_TO_EXECUTE}">{MSG_EXECUTE_IMPORT}</a>
+	<p>{MSG_REP_INFOTEXT}<p><br>
+	<a id="btn_structure_import_execute" class='btn btn-default' href="{LINK_TO_EXECUTE}">{MSG_EXECUTE_IMPORT}</a>
+	<div id="div_structure_import_wait" class="hidden">
+	<img class="block" src="./Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/templates/default/images/img_rings.svg">
+	<p>{MSG_WAIT_TEXT}</p>
+	</div>
 </div>
 <div>
-{ALL_TABLES}
+	{ALL_TABLES}
 </div>
 <!-- END structureimport_reporter -->

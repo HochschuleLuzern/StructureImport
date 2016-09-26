@@ -216,6 +216,9 @@ class ilStructureImportReporter
 	    $tpl->setVariable("LINK_TO_EXECUTE", $link);
 	    $tpl->setVariable("MSG_EXECUTE_IMPORT", $this->plugin->txt('button_execute_import'));
 	    
+	    /* Add text to the waiting div*/
+	    $tpl->setVariable("MSG_WAIT_TEXT", $this->plugin->txt('msg_wait_text'));
+	    
 	    /* Add report tables */
 		if(count($this->error_array)>1)
 		{

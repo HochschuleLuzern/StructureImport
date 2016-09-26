@@ -59,6 +59,7 @@ msg_import_finished#:#Import beendet!
 msg_log_path_text#:#Logfile unter: 
 msg_modules_in_db#:#Folgende Module sind zurzeit in der Datenbank:
 msg_empty_import_excelsheet#:#In der Datei sind keine verfügbaren Aktionen aufgelistet. Somit kann nichts importiert werden.
+msg_wait_text#:#Import wird durchgeführt. Dies kann einen Moment dauern.
 
 error_file_not_found#:#Datei für den Strukturimport konnte nicht gefunden werden: 
 error_unknown_exception_html_out#:#Ein unbekannter Fehler ist aufgetreten.Er enthielt folgende Nachricht:<br>
