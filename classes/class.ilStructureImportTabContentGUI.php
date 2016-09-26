@@ -183,6 +183,10 @@ class ilStructureImportTabContentGUI
     		                {
         		                /* Get html for the page */
         		                $html .= $reporter->getHTML($this, $this->filename);
+        		                
+        		                /* Adds javascript to global template */
+        		                $this->tpl->addJavaScript('./Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/templates/default/remove_btn_show_wait.js');
+        		                
     		                }
     		                else
     		                {
