@@ -55,8 +55,8 @@ abstract class ilStructureImportCreate extends ilStructureImportActionModuleBase
         if($status == 0)
         { 
             /* Basic values */
-            $new_obj->setOwner($this->executing_user);
             $new_obj->setType($this->type);
+            $new_obj->setOwner($this->executing_user);
             $new_obj->setTitle($title);
             $new_obj->setDescription($description);
             $new_obj->create();

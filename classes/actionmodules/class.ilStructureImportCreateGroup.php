@@ -32,6 +32,7 @@ class ilStructureImportCreateGroup extends ilStructureImportCreate
 		$status = 0;
 		$role = $row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_ROLE)];
 		$user_string = $row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_LOGIN)];
+		$user_array = $this->getUserArrayFromString($user_string);
 
 		/* Create object */
 		$group_obj = new ilObjGroup();
@@ -42,16 +43,9 @@ class ilStructureImportCreateGroup extends ilStructureImportCreate
 	    }
 		
 		/* Add members */
-	    $group_members_object = ilGroupParticipants::_getInstanceByObjId($group_obj->getId());
-	    if($user_string != '')
-	    {
-    		$this->addMembers($group_members_object, $user_string, $role);
-	    }
-	    
-	    /* Add Owner as Groupadmin */
-	    $group_members_object->add($this->executing_user, IL_GRP_ADMIN);
+	    $this->addUsersToContainer($user_array, $role_string, $obj_id);
 		
-		/* Close group */
+		/* Close/Open group */
 		$group_type = $this->config->getValue(self::getModuleName(),"group_type");
 		$group_obj->initGroupStatus($this->group_type);
 		
@@ -61,66 +55,10 @@ class ilStructureImportCreateGroup extends ilStructureImportCreate
 		return $status;
 	}
 	
-	private function addMembers(&$group_members_object, $user_string, $role)
-	{
-	    $user_array = explode(',', $user_string);
-	    switch(strtolower($role))
-	    {
-	        case strtolower($this->plugin->txt('role_admin')):
-	            $role_from_const = IL_GRP_ADMIN;
-	            break;
-	        case strtolower($this->plugin->txt('role_member')):
-	            $role_from_const = IL_GRP_MEMBER;
-	            break;
-	        case '':
-	            $role_from_const = IL_GRP_MEMBER;
-	            break;
-	        default:
-	            $role_from_const = '';
-	            break;
-	    }
-	    
-	    if($role_from_const!= '')
-	    {
-	        $error_users;
-	        foreach($user_array as $user_name)
-	        {
-	            $user_id = ilObjUser::getUserIdByLogin(trim($user_name));
-	            if($user_id > 0)
-	            {
-	               $group_members_object->add($user_id,$role_from_const);
-	               $success_users .= $user_name . ',';
-	            }
-	            else 
-	            {
-	                $error_users .= $user_name . ',';
-	            }
-	        }
-	        
-	        if($success_users != '')
-	        {
-	            $success_users = trim($success_users, ',');
-	            $this->log->write("The role '$role' was succesfully assigned to following users: $success_users", 1);
-	        }
-	        
-	        if($error_users != '')
-	        {
-	            //Better just log it. This is not a dangerous error
-	            $error_users = trim($error_users, ',');
-	            $this->log->write("Error while adding following users: $error_users", 5);
-	            //$this->error_messages[] = $this->plugin->txt() . $error_users;
-	            //return -1;
-	        }
-	    }
-	    else
-	    {
-	        $this->error_message = 'error_role_not_found';
-	        return -1;
-	    }
-	    
-	    return 'ok';
-	}
-	
+	/**
+	 * 
+	 * @return number|string[][]|string[][][]
+	 */
 	public static function getConfFields()
 	{
 	    $plugin = ilStructureImportPlugin::getInstance();
@@ -151,6 +89,10 @@ class ilStructureImportCreateGroup extends ilStructureImportCreate
 	    return $fields;
 	}
 	
+	/**
+	 * 
+	 * @return number
+	 */
 	public static function getDefaultConfigValues()
 	{
 	    $parent_values = parent::getDefaultConfigValues();

@@ -226,6 +226,161 @@ abstract class ilStructureImportActionModuleBase
 		}
 		return $current_ref;
 	}
+	
+	/**
+	 * Converts a comma-separated string of usernames (loginname) to an array with the user_id
+	 * of every given user that exists
+	 * 
+	 * @param string      $user_string
+	 * @return integer[]  $user_id_array
+	 */
+	protected function getUserArrayFromString($user_string)
+	{
+	    if($user_string == '')
+	    {
+	        return array();
+	    }
+	    
+	    $user_name_array = explode(',', $user_string);
+	    
+	    $user_id_array = array();
+	    
+	    foreach($user_name_array as $user_name)
+	    {
+	        $user_id = ilObjUser::getUserIdByLogin(trim($user_name));
+	        if($user_id > 0)
+	            $user_id_array[] = $user_id;
+	        else 
+	            $this->log->write("Error: The user $user_name was not found", 5);
+	    }
+	    
+	    return $user_id_array;
+	}
+	
+	/**
+	 * Adds an array of user_ids to the given object (obj_id) with the given role (role_string)
+	 * 
+	 * @param integer[] $user_array
+	 * @param string    $role_string
+	 * @param integer   $obj_id
+	 */
+	protected function addUsersToContainer($user_array, $role_string, $obj_id)
+	{
+	    $status = 0;
+	    
+	    $obj_type = ilObject::_lookupType($obj_id);
+	    
+	    /* Getting the needed objects */
+	    include_once './Services/Membership/classes/class.ilParticipants.php';
+	    
+	    // Get the role id from its name
+	    $role_from_const = $this->getRoleConstFromString($role_string, $obj_type);
+	    
+	    // Gets the object in which we can add the users with the role id
+	    $participants_obj = $this->getParticipantsObject($obj_id, $obj_type);
+	    
+	    /* Add user with given roles to Container */
+	    if($role_from_const != -1 && $participants_obj != -1)
+	    {
+	        foreach($user_array as $user_id)
+	           $participants_obj->add($user_id, $role_from_const);
+	    }
+	    
+	    return $status;
+	}
+	
+	/**
+	 * Gets the const role id from a string that contains the rolename
+	 * 
+	 * @param string $role_string
+	 * @param string $obj_type
+	 * @return number|string
+	 */
+	protected function getRoleConstFromString($role_string, $obj_type)
+	{
+	    $role_from_const = -1;
+	    switch($obj_type)
+	    {
+	        case 'crs':
+	            include_once './Modules/Course/classes/class.ilCourseConstants.php';
+	            switch(strtolower($role_string))
+	            {
+	                case strtolower($this->plugin->txt('role_admin')):
+	                    $role_from_const = IL_CRS_ADMIN;
+	                    break;
+	                    
+	                case strtolower($this->plugin->txt('role_tutor')):
+	                    $role_from_const = IL_CRS_TUTOR;
+	                    break;
+	                    
+	                case strtolower($this->plugin->txt('role_member')):
+	                    $role_from_const = IL_CRS_MEMBER;
+	                    break;
+	                    
+	                default:
+        	            $this->log->write("Error: The rolename '$role_string' does not exist in the objecttype '$obj_type'", 5);
+	                    break;
+	            }
+	            break;
+	            
+	        case 'grp':
+	            switch(strtolower($role_string))
+	            {
+        	        case strtolower($this->plugin->txt('ROLE_ADMIN')):
+        	            $role_from_const = IL_GRP_ADMIN;
+        	            break;
+        	            
+        	        case strtolower($this->plugin->txt('ROLE_MEMBER')):
+        	            $role_from_const = IL_GRP_MEMBER;
+        	            break;
+        	            
+        	        default:
+        	            $this->log->write("Error: The rolename '$role_string' does not exist in the objecttype '$obj_type'", 5);
+        	            break;
+	            }
+	            break;
+	            
+	        default:
+	            $this->log->write("Error: The objecttype '$obj_type' does not support members", 5);
+	            break;
+	    }
+	    
+        return $role_from_const;
+	}
+	
+	/**
+	 * Gets the participants object for the given obj_id
+	 * 
+	 * @param integer $obj_id
+	 * @param string $obj_type
+	 * @return number|ilCourseParticipants|mixed
+	 */
+	protected function getParticipantsObject($obj_id, $obj_type = '')
+	{
+        if($obj_type == '')
+            $obj_type = ilObject::_lookupType($obj_id);	    
+	    
+	    $participants_object = -1;
+	    
+	    switch ($obj_type)
+	    {
+	        case 'crs':
+	            include_once './Modules/Course/classes/class.ilCourseParticipants.php';
+	            $participants_object = ilCourseParticipants::_getInstanceByObjId($obj_id);
+	            break;
+	            
+	        case 'grp':
+	            include_once './Modules/Group/classes/class.ilGroupParticipants.php';
+	            $participants_object = ilGroupParticipants::_getInstanceByObjId($obj_id);
+	            break;
+	            
+	        default:
+	            $this->log->write("Error: Did not found a participants object for the objecttype '$obj_type'");
+                break;
+        }
+        
+        return $participants_object;
+    }
 }
 
 ?>

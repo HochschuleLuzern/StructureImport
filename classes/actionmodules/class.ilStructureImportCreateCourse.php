@@ -34,8 +34,9 @@ class ilStructureImportCreateCourse extends ilStructureImportCreate
 		
 		/* Init */
 		$status = 0;
-		$role = $row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_ROLE)];
+		$role_string = $row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_ROLE)];
 		$user_string = $row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_LOGIN)];
+		$user_array = $this->getUserArrayFromString($user_string);
 		
 		/* Values from the old structure import
 		$courseSort = 'Title';
@@ -47,6 +48,7 @@ class ilStructureImportCreateCourse extends ilStructureImportCreate
 		/* Start import */
 		$course_obj = new ilObjCourse();
 		$status = $this->initObjectBase($course_obj, $row, $container_ref);
+		$obj_id = $course_obj->getId();
 	    if($status != 0)
 	    {
 	        return $status;
@@ -61,14 +63,7 @@ class ilStructureImportCreateCourse extends ilStructureImportCreate
 		$course_obj->setSubscriptionType($this->courseRegistration);
 		
 		/* Add members */
-		$course_members_object = ilCourseParticipants::_getInstanceByObjId($course_obj->getId());
-		if($user_string != '')
-		{
-    		$this->addMembers($course_members_object, $user_string, $role);
-		}
-		
-		/* Add Owner as Courseadmin */
-		$course_members_object->add($this->executing_user, IL_CRS_ADMIN);
+		$this->addUsersToContainer($user_array, $role_string, $obj_id);
 		
 		/* Apply changes */
 		$course_obj->update();
@@ -76,68 +71,10 @@ class ilStructureImportCreateCourse extends ilStructureImportCreate
 		return $status;
 	}
 	
-	private function addMembers(&$course_members_object, $user_string, $role)
-	{		
-		$user_array = explode(',', $user_string);
-		switch(strtolower($role))
-		{
-			case strtolower($this->plugin->txt('role_admin')):
-				$role_from_const = IL_CRS_ADMIN;
-				break;
-			case strtolower($this->plugin->txt('role_tutor')):
-				$role_from_const = IL_CRS_TUTOR;
-				break;
-			case strtolower($this->plugin->txt('role_member')):
-				$role_from_const = IL_CRS_MEMBER;
-				break;
-			case '':
-				$role_from_const = IL_CRS_MEMBER;
-				break;
-			default:
-				$role_from_const = '';
-				break;
-		}
-		
-		if($role_from_const!= '')
-		{
-		    $success_users = '';
-		    $error_users = '';
-			foreach($user_array as $user_name)
-			{
-				$user_id = ilObjUser::getUserIdByLogin(trim($user_name));
-			    if($user_id > 0)
-	            {
-	               $course_members_object->add($user_id,$role_from_const);
-	               $success_users .= $user_name . ',';
-	            }
-	            else 
-	            {
-	                $error_users .= $user_name . ',';
-	            }
-			}
-			
-			if($success_users != '')
-			{
-			    $success_users = trim($success_users, ',');
-                $this->log->write("The role '$role' was succesfully assigned to following users: $success_users", 1);
-			}
-			
-			if($error_users != '')
-			{
-			    //Better just log it. This is not a dangerous error
-	            $error_users = trim($error_users, ',');
-	            $this->log->write("Error while adding following users: $error_users", 5);
-			}
-		}
-		else
-		{
-			$this->error_message = 'error_role_not_found';
-			return -1;
-		}
-		
-		return 'ok';
-	}
-	
+	/**
+	 * 
+	 * @return number
+	 */
 	public static function getConfFields()
 	{
 	    $plugin = ilStructureImportPlugin::getInstance();
