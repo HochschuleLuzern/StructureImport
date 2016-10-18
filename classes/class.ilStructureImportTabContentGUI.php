@@ -1,6 +1,5 @@
 <?php
 include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilImportExcel.php';
-include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportReporter.php';
 include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportPlugin.php';
 include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportDBManager.php';
 include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportConfig.php';
@@ -62,29 +61,48 @@ class ilStructureImportTabContentGUI
     		$this->initHeader();
     				
     		/* Fill content */
-    		$cmd = $this->ctrl->getCmd();
-    		
-    		switch ($cmd) 
+    		$next_class = strtolower($this->ctrl->getNextClass());
+    		switch($next_class)
     		{
-    			case 'upload':
-    				$this->upload();
-    				break;
-    			case 'showReport':
-    				$this->showReport();
-    				break;
-    			case 'executeImport':
-    				$this->executeImport();
-    				break;
-    			case 'showInstruction':
-    				$this->showInstruction();
-    				break;
-    			case 'updateDB':
-    			    $this->updateDB();
-    			    break;
-    			default:
-    			    ilUtil::sendFailure($this->plugin->txt('error_unknown_cmd') . " $cmd", true);
-    			    ilUtil::redirect('index.php');
-    				break;
+    		    case 'ilstructureimportanalysergui':
+    		        	    $this->tabs->activateTab(ilStructureImportConstants::TAB_IMPORT_ID);
+    		        	    
+    		        	    // Get and check the uploaded file
+                    		$excel_file = $this->checkFileUpload();
+                    		if($filedir != -1)
+                    		{
+                    		        /* Analyse the data */
+                    		        include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportAnalyserGUI.php';
+                    		        $reporter = new ilStructureImportAnalyserGUI($excel_file);
+                    		        $this->ctrl->forwardCommand($reporter);
+                    		}
+    		        
+    		        break;
+    		    
+    		    default:
+    		        $cmd = $this->ctrl->getCmd();
+                    switch ($cmd) 
+            	    {
+            			case 'upload':
+            				$this->upload();
+            				break;
+            			case 'showReport':
+            				$this->showReport();
+            				break;
+            			case 'executeImport':
+            				$this->executeImport();
+            				break;
+            			case 'showInstruction':
+            				$this->showInstruction();
+            				break;
+            			case 'updateDB':
+            			    $this->updateDB();
+            			    break;
+            			default:
+            			    ilUtil::sendFailure($this->plugin->txt('error_unknown_cmd') . " $cmd", true);
+            			    ilUtil::redirect('index.php');
+            				break;
+            		}
     		}
 
     		/* Show createt content */
@@ -154,72 +172,6 @@ class ilStructureImportTabContentGUI
 		$this->tabs->addTarget($this->plugin->txt('tab_instruction'),
 		        $instrunction_link, "ilStructureImportConstants::TAB_INSTRUCTION_ID", get_class($this)
 		        , "", $force_active);*/
-	}
-	
-	private function showReport()
-	{		
-	    $this->tabs->activateTab(ilStructureImportConstants::TAB_IMPORT_ID);
-		$filedir = $this->checkFileUpload();
-		
-		if($filedir != -1)
-		{
-		    try 
-		    {
-		        /* Import data from excel */
-		        $excelImporter = new ilImportExcel();
-		        $array = $excelImporter->openExcelFile($filedir);
-		        	
-		        if($array != -1)
-		        {
-		            if(count($array) != 1)
-		            {
-		                try 
-		                {
-    		                /* Analyse the data */
-    		                $reporter = new ilStructureImportReporter();
-    		                $status = $reporter->checkStructureImportArray($array);
-    		                 
-    		                if($status != -1)
-    		                {
-        		                /* Get html for the page */
-        		                $html .= $reporter->getHTML($this, $this->filename);
-        		                
-        		                /* Adds javascript to global template */
-        		                $this->tpl->addJavaScript('./Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/templates/default/remove_btn_show_wait.js');
-        		                
-    		                }
-    		                else
-    		                {
-    		                    $html = $reporter->error_message;
-    		                }
-		                }
-		                catch(Exception $e)
-		                {
-		                    $html = $this->plugin->txt('error_unknown_exception_html_out') . $e->getMessage();
-		                }
-		            }
-		            else
-		            {
-		                $html = $this->plugin->txt("msg_empty_import_excelsheet");
-		            }
-		        }
-		        else
-		        {
-		            $html = $this->error_message;
-		        }
-		    }
-		    catch (Exception $e)
-		    {
-		        $html = $this->plugin->txt('error_unknown_exception_html_out') . $e->getMessage();
-		    }
-		}
-		else
-		{			
-			$html = $this->error_message;
-		}
-
-		/* Set html for the page */
-		$this->tpl->setContent($html);
 	}
 	
 	private function initExecuteImportForm()
@@ -444,7 +396,7 @@ class ilStructureImportTabContentGUI
 		$this->tabs->activateTab(ilStructureImportConstants::TAB_IMPORT_ID);
 		
 		$this->form_gui = new ilPropertyFormGUI();
-		$this->form_gui->setFormAction($this->ctrl->getFormAction($this, "showReport"));
+		$this->form_gui->setFormAction($this->ctrl->getFormActionByClass('ilstructureimportanalysergui', "showReport"));
 		$this->form_gui->setTitle($this->plugin->txt('title_upload'));
 		$this->form_gui->addCommandButton('showReport',$this->plugin->txt('button_upload'));
 		$file = new ilFileInputGUI($this->plugin->txt("msg_import_file"), "file_".$purpose);		

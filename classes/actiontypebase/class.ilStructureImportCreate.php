@@ -158,7 +158,7 @@ abstract class ilStructureImportCreate extends ilStructureImportActionModuleBase
         
         if($status > 0)
         {
-            $this->log->write("Error: where is already an object with the title '$title'");
+            $this->log->write("Error: There is already an object with the title '$title'");
         }
         
         return $status;

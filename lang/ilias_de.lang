@@ -1,5 +1,6 @@
 <!-- language file start -->
 title#:#Strukturimport
+reporter_analysis_title#:#Kurze Aktionsübersicht zur Datei: 
 tab_title#:#Strukturimport
 tab_instruction#:#Anleitung
 tab_back_link#:#Zurück
@@ -39,7 +40,6 @@ excelcol_login#:#Login
 excelcol_role#:#Rolle
 excelcol_permission_type#:#Rechtetyp
 excelcol_sort_type#:#Sortiertyp
-excelcol_msg_error#:#Fehlermeldung
 
 folder_permission_postbox#:#Briefkasten
 folder_permission_exchange#:#Dateiaustausch
@@ -60,6 +60,7 @@ msg_log_path_text#:#Logfile unter:
 msg_modules_in_db#:#Folgende Module sind zurzeit in der Datenbank:
 msg_empty_import_excelsheet#:#In der Datei sind keine verfügbaren Aktionen aufgelistet. Somit kann nichts importiert werden.
 msg_wait_text#:#Import wird durchgeführt. Dies kann einen Moment dauern.
+msg_error#:#Fehlermeldung
 
 error_file_not_found#:#Datei für den Strukturimport konnte nicht gefunden werden: 
 error_unknown_exception_html_out#:#Ein unbekannter Fehler ist aufgetreten.Er enthielt folgende Nachricht:<br>

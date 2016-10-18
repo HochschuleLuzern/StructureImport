@@ -19,7 +19,7 @@ class ilStructureImportReporterTableGUI extends ilTable2GUI
 		
 		foreach($headerRow as $colTitle)
 		{
-			$this->addColumn($this->plugin->txt('excelcol_' . $colTitle));
+			$this->addColumn($colTitle);
 		}
 	}
 	

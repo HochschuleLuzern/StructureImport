@@ -11,7 +11,7 @@ class ilStructureImportCreateCourse extends ilStructureImportCreate
 	protected static $action_type = 'create';
 	protected static $action_lang_name = 'action_create_course';
 	protected static $required_parameters = 'action;name;path';
-	protected static $optional_parameters = 'description;members';
+	protected static $optional_parameters = 'description;login;role';
 	protected static $create_type = 'crs';
 	
     public function __construct($log)
