@@ -267,9 +267,9 @@ abstract class ilStructureImportActionModuleBase
 	protected function addUsersToContainer($user_array, $role_string, $obj_id)
 	{
 	    $status = 0;
-	    
+
 	    $obj_type = ilObject::_lookupType($obj_id);
-	    
+
 	    /* Getting the needed objects */
 	    include_once './Services/Membership/classes/class.ilParticipants.php';
 	    

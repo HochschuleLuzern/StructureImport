@@ -30,20 +30,40 @@ class ilStructureImportCreateGroup extends ilStructureImportCreate
 		
 		/* Init */
 		$status = 0;
-		$role = $row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_ROLE)];
+		$role_string = strtolower($row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_ROLE)]);
 		$user_string = $row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_LOGIN)];
 		$user_array = $this->getUserArrayFromString($user_string);
+		
+		// Check if there is 1 or more users given for the admin role
+		// This is only the case, if the given user role is the "Admin"-Role and there is min 1 user
+		// Else the person who executes the import will be added as "Admin"
+		if($role_string == $this->plugin->txt('role_admin') && count($user_array) > 0)
+		{
+		    $has_admin_user = true;
+		}
+		else 
+		{
+		    $has_admin_user = false;
+		}
 
 		/* Create object */
 		$group_obj = new ilObjGroup();
 		$status = $this->initObjectBase($group_obj, $row, $container_ref);
+		$obj_id = $group_obj->getId();
 	    if($status != 0)
 	    {
 	        return $status;
 	    }
 		
 		/* Add members */
-	    $this->addUsersToContainer($user_array, $role_string, $obj_id);
+	    
+        // Add users given from the action
+        if(count($user_array) > 0)
+	       $this->addUsersToContainer($user_array, $role_string, $obj_id);
+	    
+	    // If there isnt already an admin -> add the person who executes the import as admin
+	    if(!$has_admin_user)
+	        $this->addUsersToContainer(array($this->executing_user), $this->plugin->txt('role_admin'), $obj_id);
 		
 		/* Close/Open group */
 		$group_type = $this->config->getValue(self::getModuleName(),"group_type");
