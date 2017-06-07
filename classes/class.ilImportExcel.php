@@ -1,13 +1,5 @@
 <?php
-// TODO: If there is no support for ilias without phpexcel -> delete this if-else thing 
-if(is_dir('./libs/composer/vendor/phpoffice/phpexcel/Classes/PHPExcel.php'))
-{
-	include_once './libs/composer/vendor/phpoffice/phpexcel/Classes/PHPExcel.php';
-}
-else
-{
-	include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/lib/PHPExcel/PHPExcel.php';
-}
+include_once './libs/composer/vendor/phpoffice/phpexcel/Classes/PHPExcel.php';
 
 class ilImportExcel
 {    
