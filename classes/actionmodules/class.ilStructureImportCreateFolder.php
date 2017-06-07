@@ -1,7 +1,6 @@
 <?php
 include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/actiontypebase/class.ilStructureImportCreate.php';
 include_once ("Modules/Folder/classes/class.ilObjFolder.php");
-include_once ('./Services/AccessControl/classes/class.ilPostboxHelper.php');
 
 class ilStructureImportCreateFolder extends ilStructureImportCreate
 {
@@ -11,12 +10,27 @@ class ilStructureImportCreateFolder extends ilStructureImportCreate
 	protected static $required_parameters = 'action;name;path';
 	protected static $optional_parameters = 'description;hslutype';
 	protected static $create_type = 'fold';
+	protected $didactic_templates = array();
 	
 	public function __construct($log)
 	{
 	    parent::__construct($log);
 	     
 	    $this->type = 'fold';
+	    $this->readStandardDicTpls();
+	}
+	
+	protected function readStandardDicTpls()
+	{
+	    global $ilDB;
+	    $standard_tpls = array('Briefkasten', 'Dateiaustausch', 'Gruppenordner');
+	    foreach($standard_tpls as $tpl_name)
+	    {
+	        $sql = "SELECT * FROM didactic_tpl_settings WHERE title = " . $ilDB->quote($tpl_name, "text");
+	        $res = $ilDB->query($sql);
+	        if($row = $ilDB->fetchAssoc($res))
+	           $this->didactic_templates[$tpl_name] = $row['id'];
+	    }
 	}
 	
 	protected function createObject($row, $container_ref)
@@ -41,7 +55,11 @@ class ilStructureImportCreateFolder extends ilStructureImportCreate
 		/* Apply changes */
 		$folder_obj->update();
 		
-		try {
+		if($this->didactic_templates[$folder_permission] != null)
+		    $folder_obj->applyDidacticTemplate($this->didactic_templates[$folder_permission]);
+		
+		/*try {
+		 * include_once ('./Services/AccessControl/classes/class.ilPostboxHelper.php');
     		switch($folder_permission)
     		{
     			case $this->plugin->txt('folder_permission_postbox'):
@@ -68,7 +86,7 @@ class ilStructureImportCreateFolder extends ilStructureImportCreate
 		{
 		    ilPostboxHelper::_makeNormalFolder($ref_id);
 		    $this->log->write('Error while settings special folder permissiontype. The permissiontype was set to normal', 10);
-		}
+		}*/
 
 		return $status;
 	}

@@ -13,15 +13,24 @@ class ilStructureImportCreateGroup extends ilStructureImportCreate
 	protected static $required_parameters = 'action;name;path';
 	protected static $optional_parameters = 'description;login;role';
 	protected static $create_type = 'grp';
+    protected $grp_dic_tpl;
 	
     public function __construct($log)
 	{
+        global $ilDB;
+        
 	    parent::__construct($log);
 	    
 	    $this->type = 'grp';
 	    
 	    $this->group_type = $this->config->getValue(self::getModuleName(), ilStructureImportConstants::GROUP_TYPE);
 	    $groupOwnerNotification = 'No';
+	    
+	    // Get didactic template for group role
+	    $sql = 'SELECT * FROM didactic_tpl_settings WHERE title = "grp_closed"';
+	    $res = $ilDB->query($sql);
+	    $row = $ilDB->fetchAssoc($res);
+	    $this->grp_dic_tpl = $row['id'];
 	}
 	
 	protected function createObject($row, $container_ref)
@@ -66,8 +75,9 @@ class ilStructureImportCreateGroup extends ilStructureImportCreate
 	        $this->addUsersToContainer(array($this->executing_user), $this->plugin->txt('role_admin'), $obj_id);
 		
 		/* Close/Open group */
-		$group_type = $this->config->getValue(self::getModuleName(),"group_type");
-		$group_obj->initGroupStatus($this->group_type);
+		//$group_type = $this->config->getValue(self::getModuleName(),"group_type");
+		//$group_obj->initGroupStatus($this->group_type);
+		$group_obj->applyDidacticTemplate($this->grp_dic_tpl);
 		
 		/* Apply changes */
 		$group_obj->update();
