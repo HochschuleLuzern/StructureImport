@@ -57,7 +57,7 @@ class ilStructureImportAnalyser
              
             return $structure_import_array;
         }
-        
+        ilUtil::sendFailure('Error: File not Found');
         return -1;
     }
     

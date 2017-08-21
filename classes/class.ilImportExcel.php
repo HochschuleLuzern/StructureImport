@@ -27,6 +27,7 @@ class ilImportExcel
 		}
 		else 
 		{
+		    ilUtil::sendFailure('Error: File not found');
 		    return -1;
 		}
 		
@@ -54,7 +55,8 @@ class ilImportExcel
 		}
 		else
 		{
-			$this->error_message = "Incorrect Array";
+			$this->error_message = "Error: Headerrow in Excelfile not found";
+			ilUtil::sendFailure('Error: Headerrow in Excelfile not found');
 			return -1;
 		}
 		
@@ -73,7 +75,7 @@ class ilImportExcel
 				}
 			}
 		}
-		
+
 		if($this->is_old_fileversion)
 		{
 			for($i = 0; $i < count($this->excel_header_row);$i++)
@@ -227,7 +229,7 @@ class ilImportExcel
 	{
 		$ret = false;
 		
-		if($this->comment_row_enabled && strlen($row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_COMMENT)]) != 0)
+		if($this->comment_row_enabled && strlen(trim($row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_COMMENT)])) != 0)
 		{
 			$ret = true;
 		}
