@@ -10,8 +10,6 @@ abstract class ilStructureImportCreate extends ilStructureImportActionModuleBase
     public function __construct($log)
     {
         parent::__construct($log);
-        
-        $this->order_type = $this->config->getValue(self::getModuleName(), ilStructureImportConstants::CONF_ORDER_TYPE);
     }
     
     public function executeAction($row, $root_ref, $current_ref)
@@ -74,17 +72,19 @@ abstract class ilStructureImportCreate extends ilStructureImportActionModuleBase
                 // Set sortmode by input or configuration
                 $sort_type = $this->getOrderTypeIndex($row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_SORT_TYPE)]);
                 
-                // Some containers need to do this with a settings object, and some containers can do this direct
-                include_once('Services/Container/classes/class.ilContainerSortingSettings.php');
-                $settings = new ilContainerSortingSettings($new_obj->getId());
-                $settings->setSortMode($sort_type);
-                $settings->setSortDirection(ilContainer::SORT_DIRECTION_ASC);
+                if($sort_type >= 0)
+                {
+                    // Some containers need to do this with a settings object, and some containers can do this direct
+                    include_once('Services/Container/classes/class.ilContainerSortingSettings.php');
+                    $settings = new ilContainerSortingSettings($new_obj->getId());
+                    $settings->setSortMode($sort_type);
+                    $settings->setSortDirection(ilContainer::SORT_DIRECTION_ASC);
+                    
+                    $new_obj->setOrderType($sort_type);
+                    $settings->update();
+                    $this->log->write("Setted ordertyp to " . $sort_type, 1);
+                }
                 
-                $new_obj->setOrderType($sort_type);
-                
-                $this->log->write("Setted ordertyp to " . $sort_type, 1);
-                
-                $settings->update();
                 $new_obj->update();
             }
             catch(Exception $e)
@@ -119,7 +119,7 @@ abstract class ilStructureImportCreate extends ilStructureImportActionModuleBase
                 $ret = ilContainer::SORT_CREATION;
                 break;
             default:
-                $ret = $this->order_type;
+                $ret = -1;
                 break;
         }
         
@@ -233,32 +233,9 @@ abstract class ilStructureImportCreate extends ilStructureImportActionModuleBase
 	    $plugin = ilStructureImportPlugin::getInstance();
 	    
 	    $fields = array(
-	            ilStructureImportConstants::CONF_ORDER_TYPE => array(
-	                    'type' => 'ilSelectInputGUI',
-	                    'options' => array(
-	                            ilContainer::SORT_TITLE => $plugin->txt('config_sort_by_title'),
-	                            ilContainer::SORT_MANUAL => $plugin->txt('config_sort_by_manual'),
-	                            ilContainer::SORT_ACTIVATION => $plugin->txt('config_sort_by_activation'),
-	                            ilContainer::SORT_INHERIT => $plugin->txt('config_sort_by_inherit'),
-	                            ilContainer::SORT_CREATION => $plugin->txt('config_sort_by_creation')
-	                    )
-	            )
+
 	    );
 	    
 	    return $fields;
-	}
-	
-	public static function getDefaultConfigValues()
-	{
-	    $parent_values = parent::getDefaultConfigValues();
-	    
-	    $child_values = array(
-	            //$key => $value
-	            ilStructureImportConstants::CONF_ORDER_TYPE => ilContainer::SORT_TITLE
-	    );
-	    
-	    $default_values = $parent_values + $child_values;
-	    
-	    return $default_values;
 	}
 }
