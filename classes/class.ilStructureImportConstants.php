@@ -5,10 +5,10 @@ class ilStructureImportConstants
     /* Plugin constants */
     
     // Path Constants
-    const PATH_TO_ACTION_MODULES = './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/actionmodules/';
+    const PATH_TO_ACTION_MODULES = ILIAS_ABSOLUTE_PATH . '/Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/actionmodules/';
     const IMPORT_FILENAME = 'importFilename';
-    const IMPORT_FILEDIR = './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/import/';
-    const DEFAULT_LOGFILE_DIR = './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/log/';
+    const IMPORT_FILEDIR = ILIAS_ABSOLUTE_PATH . '/Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/import/';
+    const DEFAULT_LOGFILE_DIR = ILIAS_ABSOLUTE_PATH . '/Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/log/';
     
     // Tab name Constants
     const TAB_INSTRUCTION_ID = 'ilstructureimportinstruction';
@@ -64,7 +64,7 @@ class ilStructureImportConstants
     
     // Regex constants
     const REGEXPATH = "*";
-    const REGEXNAME = "/^[A-Za-z0-9\ ÄäÖöÜü]{3,255}$/";
+    const REGEXNAME = "/^[A-Za-z0-9\ Ã„Ã¤Ã–Ã¶ÃœÃ¼]{3,255}$/";
     const REGEXLOGIN = "*";
     
     // Other constants
