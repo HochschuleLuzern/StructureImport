@@ -69,7 +69,7 @@ class ilStructureImportTabContentGUI
     		        	    
     		        	    // Get and check the uploaded file
                     		$excel_file = $this->checkFileUpload();
-                    		if($filedir != -1)
+                    		if($excel_file != -1)
                     		{
                     		        /* Analyse the data */
                     		        include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportAnalyserGUI.php';
