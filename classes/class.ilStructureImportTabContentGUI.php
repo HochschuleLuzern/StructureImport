@@ -55,6 +55,8 @@ class ilStructureImportTabContentGUI
 	
 	function executeCommand()
 	{
+	    global $DIC;
+	    
 	    if($this->checkAccess())
 	    {
     		/* Fill header */
@@ -68,8 +70,9 @@ class ilStructureImportTabContentGUI
     		        	    $this->tabs->activateTab(ilStructureImportConstants::TAB_IMPORT_ID);
     		        	    
     		        	    // Get and check the uploaded file
-                    		$excel_file = $this->checkFileUpload();
-                    		if($excel_file != -1)
+    		        	    include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportFileStorage.php';
+    		        	    $excel_file = $this->handleImportFileUpload($DIC->upload(), new ilStructureImportFileStorage($DIC->filesystem()->storage()));
+                    		if($filedir != -1)
                     		{
                     		        /* Analyse the data */
                     		        include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportAnalyserGUI.php';
@@ -174,13 +177,29 @@ class ilStructureImportTabContentGUI
 		        , "", $force_active);*/
 	}
 	
-	private function initExecuteImportForm()
+	private function initImportForm()
 	{
-		
+	    $this->form_gui = new ilPropertyFormGUI();
+	    $this->form_gui->setFormAction($this->ctrl->getFormActionByClass('ilstructureimportanalysergui', "showReport"));
+	    $this->form_gui->setTitle($this->plugin->txt('title_upload'));
+	    $this->form_gui->addCommandButton('showReport',$this->plugin->txt('button_upload'));
+	    $file = new ilFileInputGUI($this->plugin->txt("msg_import_file"), 'importerFile');
+	    $this->form_gui->addItem($file);
 	}
 	
-	private function checkFileUpload()
+	private function handleImportFileUpload($upload, ilStructureImportFileStorage $storage)
 	{
+	    global $DIC;
+	    
+	    $this->initImportForm();
+	    $this->form_gui->checkInput();
+	    $file_upload_info =$this->form_gui->getInput('importerFile');
+	    $filename = $DIC->user()->getId() . '_' . microtime() . '.xlsx';
+	    
+	    $storage->saveImportFileFromUpload($upload, $file_upload_info, $filename);
+        
+        return $storage->getImportFilePath($filename);
+	    
 		if(isset($_FILES['file_']))
 		{
 			$file = $_FILES['file_'];
@@ -282,9 +301,13 @@ class ilStructureImportTabContentGUI
 	
 	private function executeImport()
 	{
+	    global $DIC;
 	    $this->tabs->activateTab(ilStructureImportConstants::TAB_IMPORT_ID);
 		$filename = urldecode($_GET[ilStructureImportConstants::IMPORT_FILENAME]);
-		$filedir = ilStructureImportConstants::IMPORT_FILEDIR . $filename;
+		
+		$storage = new ilStructureImportFileStorage($DIC->filesystem()->storage()); 
+		
+		//$filedir = $storage->getIm
 		
 		if(is_file($filedir))
 		{
@@ -395,12 +418,7 @@ class ilStructureImportTabContentGUI
 		
 		$this->tabs->activateTab(ilStructureImportConstants::TAB_IMPORT_ID);
 		
-		$this->form_gui = new ilPropertyFormGUI();
-		$this->form_gui->setFormAction($this->ctrl->getFormActionByClass('ilstructureimportanalysergui', "showReport"));
-		$this->form_gui->setTitle($this->plugin->txt('title_upload'));
-		$this->form_gui->addCommandButton('showReport',$this->plugin->txt('button_upload'));
-		$file = new ilFileInputGUI($this->plugin->txt("msg_import_file"), "file_".$purpose);		
-    	$this->form_gui->addItem($file);
+		$this->initImportForm();
     	
 		$this->tpl->setContent($this->form_gui->getHTML());
 	}
