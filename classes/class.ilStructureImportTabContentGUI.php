@@ -290,13 +290,10 @@ class ilStructureImportTabContentGUI
 		{
 		    /* Create logfile */
 		    $logfilename = date('Ymdhi') . '_' . $this->user->getId() . '.log';
-		    $this->logfile_dir = $this->config->getValue(ilStructureImportConstants::CONF_MAIN_SETTINGS, 
-	                                                     ilStructureImportConstants::CONF_LOG_PATH);
-		    if(is_dir($this->logfile_dir)==null)
-		    {
-		        $this->logfile_dir = ilStructureImportConstants::DEFAULT_LOGFILE_DIR;
-		    }
-		    $log_level = $this->config->getValue(ilStructureImportConstants::CONF_MAIN_SETTINGS,
+
+            $this->logfile_dir = ilStructureImportConstants::DEFAULT_LOGFILE_DIR;
+
+            $log_level = $this->config->getValue(ilStructureImportConstants::CONF_MAIN_SETTINGS,
 		                                         ilStructureImportConstants::CONF_LOG_LEVEL);
 		    $this->log = new ilLog($this->logfile_dir , $logfilename, 'Structure Import', true, $log_level);
 		    $this->log->write('Start logging', 1);
