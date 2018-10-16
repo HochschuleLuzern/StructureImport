@@ -227,7 +227,7 @@ class ilImportExcel
 	{
 		$ret = false;
 		
-		if($this->comment_row_enabled && strlen($row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_COMMENT)]) != 0)
+		if($this->comment_row_enabled && strlen(trim($row[$this->plugin->txt(ilStructureImportConstants::EXCELCOL_COMMENT)])) > 0)
 		{
 			$ret = true;
 		}
