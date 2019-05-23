@@ -1,6 +1,4 @@
 <?php
-include_once './libs/composer/vendor/phpoffice/phpexcel/Classes/PHPExcel.php';
-
 class ilImportExcel
 {    
 	private $excel_errors = array();
@@ -19,7 +17,7 @@ class ilImportExcel
 	
 	function openExcelFile($import_file)
 	{
-		$obj_reader = PHPExcel_IOFactory::createReader('Excel2007');
+		$obj_reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader('Xlsx');
 		$obj_reader->setReadDataOnly(true);
 		if(is_file($import_file))
 		{
@@ -48,6 +46,7 @@ class ilImportExcel
 		
 		/* Get header*/
 		$excel_header_row_nr = $this->getHeaderRowNr($highestRow);
+
 		if($excel_header_row_nr >= 0 && $excel_header_row_nr != null)
 		{
 			$this->excel_header_row = $this->getHeaderRowContent($excel_header_row_nr);
@@ -85,7 +84,6 @@ class ilImportExcel
 				}
 			}
 		}
-		
 		return $this->excel_rows;
 	}
 	
@@ -133,9 +131,10 @@ class ilImportExcel
 		for($row = 0; !$looks_like_header && $row < $highest_row; $row++)
 		{
 			$has_empty_cells = false;
-			for($col = 0; !$hasEmptyClles && $col < 4; $col++)
+			for($col = 1; !$has_empty_cells && $col < 5; $col++)
 			{
 				$value = $this->excel_sheet->getCellByColumnAndRow($col, $row)->getCalculatedValue();
+
 				if($value == '')
 				{
 					$has_empty_cells = true;
@@ -163,7 +162,7 @@ class ilImportExcel
 		$this->excel_header_row = array();
 		
 		$cell_is_empty = false;
-		for($col = 0; !$cell_is_empty; $col++)
+		for($col = 1; !$cell_is_empty; $col++)
 		{
 			$value = $this->excel_sheet->getCellByColumnAndRow($col, $excel_header_row_nr)->getCalculatedValue();
 			if($value != '')

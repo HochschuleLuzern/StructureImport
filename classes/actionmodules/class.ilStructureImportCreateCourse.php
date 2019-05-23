@@ -1,9 +1,6 @@
 <?php
 include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportConstants.php';
 include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/actiontypebase/class.ilStructureImportCreate.php';
-include_once './Modules/Course/classes/class.ilObjCourse.php';
-include_once './Modules/Course/classes/class.ilCourseConstants.php';
-include_once './Modules/Course/classes/class.ilCourseParticipants.php';
 
 class ilStructureImportCreateCourse extends ilStructureImportCreate
 {
@@ -68,7 +65,6 @@ class ilStructureImportCreateCourse extends ilStructureImportCreate
 		
 		/* Availability */
 		$course_obj->setOfflineStatus(false);
-		$course_obj->setActivationType(IL_CRS_ACTIVATION_UNLIMITED);
 		
 		/* Registration */	
 		$course_obj->getSubscriptionLimitationType($this->courseRegistration);
