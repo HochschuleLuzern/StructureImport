@@ -34,7 +34,9 @@ class ilStructureImportUIHookGUI extends ilUIHookPluginGUI {
 		    $obj_type= ilObject::_lookupType($obj_id);
 		    $obj_types_with_tab = array('cat','fold','crs','grp');
 		    
-		    if (in_array($obj_type, $obj_types_with_tab))
+		    if (in_array($obj_type, $obj_types_with_tab) &&
+		    	$_GET['baseClass'] != 'iluipluginroutergui' &&
+		    	$_GET['cmdClass'] != 'ilobjectactivationgui')
 		    {
         		$plugin = ilStructureImportPlugin::getInstance();
         		$access_checker = ilStructureImportAccess::getInstance();
