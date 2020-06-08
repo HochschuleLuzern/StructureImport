@@ -7,7 +7,8 @@ class ilStructureImportConstants
     // Path Constants
     const PATH_TO_ACTION_MODULES = ILIAS_ABSOLUTE_PATH . '/Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/actionmodules/';
     const IMPORT_FILENAME = 'importFilename';
-    const IMPORT_FILEDIR = CLIENT_DATA_DIR . '/StructureImport/import/';
+    const IMPORT_FILEDIR_REL = 'StructureImport/import/';
+    const IMPORT_FILEDIR_ABS = CLIENT_DATA_DIR . '/' . self::IMPORT_FILEDIR_REL;
     const DEFAULT_LOGFILE_DIR = CLIENT_DATA_DIR . '/StructureImport/log/';
     
     // Tab name Constants

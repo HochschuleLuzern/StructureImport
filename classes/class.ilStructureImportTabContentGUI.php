@@ -37,20 +37,23 @@ class ilStructureImportTabContentGUI
 	private $is_importer;
 	
 	function __construct() 
-	{		
-		global $tpl, $ilCtrl, $ilTabs, $objDefinition, $ilUser;
+	{
+
+		global $DIC; // $tpl, $ilCtrl, $ilTabs, $objDefinition, $ilUser;
 		
-		$this->tabs = &$ilTabs;
-		$this->tpl = &$tpl;
-		$this->ctrl = &$ilCtrl;
-		$this->obj_def = &$objDefinition;
+		$this->tabs = $DIC->tabs();
+		/** @var $tpl ilGlobalPageTemplate */
+		$this->tpl = $DIC->ui()->mainTemplate();
+		$this->ctrl = $DIC->ctrl();
+		$this->obj_def = $DIC['objDefinition'];
 		$this->plugin = ilStructureImportPlugin::getInstance();
 		$this->ref_id = &$_GET['ref_id'];
 		$this->file = $_GET['name'];		
-		$this->user = &$ilUser;
+		$this->user = $DIC->user();
 		$this->obj = ilObjectFactory::getInstanceByRefId($this->ref_id);		
 		$this->config = ilStructureImportConfig::getInstance();
 		$this->access_checker  = ilStructureImportAccess::getInstance();
+		$this->file_upload = $DIC->upload();
 	}
 	
 	function executeCommand()
@@ -107,8 +110,7 @@ class ilStructureImportTabContentGUI
 
     		/* Show createt content */
     		$this->tpl->addCss('./Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/templates/default/structureimport.css');
-    		$this->tpl->getStandardTemplate();
-    		$this->tpl->show();
+    		$this->tpl->printToStdout();
         }
 	}
 
@@ -181,6 +183,20 @@ class ilStructureImportTabContentGUI
 	
 	private function checkFileUpload()
 	{
+		if(!$this->file_upload->hasBeenProcessed()) {
+			$this->file_upload->process();
+			$result_arr = $this->file_upload->getResults();
+			$result = array_shift($result_arr);
+
+			$this->filename = ilUtil::stripSlashes($result->getName());
+			$this->ctrl->setParameter($this, ilStructureImportConstants::IMPORT_FILENAME, urlencode($this->filename));
+
+			$this->file_upload->moveOneFileTo($result, ilStructureImportConstants::IMPORT_FILEDIR_REL, \ILIAS\FileUpload\Location::STORAGE, $this->filename, true);
+			$status = ilStructureImportConstants::IMPORT_FILEDIR_ABS .  $this->filename;
+		}
+
+		return $status;
+
 		if(isset($_FILES['file_']))
 		{
 			$file = $_FILES['file_'];
@@ -284,7 +300,7 @@ class ilStructureImportTabContentGUI
 	{
 	    $this->tabs->activateTab(ilStructureImportConstants::TAB_IMPORT_ID);
 		$filename = urldecode($_GET[ilStructureImportConstants::IMPORT_FILENAME]);
-		$filedir = ilStructureImportConstants::IMPORT_FILEDIR . $filename;
+		$filedir = ilStructureImportConstants::IMPORT_FILEDIR_ABS . $filename;
 		
 		if(is_file($filedir))
 		{
@@ -302,7 +318,7 @@ class ilStructureImportTabContentGUI
     		$excelImporter = new ilImportExcel();
     		$import_array = $excelImporter->openExcelFile($filedir);
     		
-    		if(import_array == -1)
+    		if($import_array == -1)
     		{
     		    $this->log->write('Error while importing excelsheet', 20);
     		    unset($this->log);

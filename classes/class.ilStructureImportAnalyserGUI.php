@@ -21,11 +21,11 @@ class ilStructureImportAnalyserGUI
      */
     function __construct($excel_file_path)
     {
-        global $ilCtrl, $tpl;
+        global $DIC;
          
-        $this->ctrl = &$ilCtrl;
+        $this->ctrl = $DIC->ctrl();
         $this->plugin = ilStructureImportPlugin::getInstance();
-        $this->tpl = $tpl;
+        $this->tpl = $DIC->ui()->mainTemplate();
         $this->analyser = new ilStructureImportAnalyser($excel_file_path);
     }
     
@@ -96,8 +96,8 @@ class ilStructureImportAnalyserGUI
         /* Add report tables */
         
         // If there are any actions that are analysed as invalid -> add a "Error table"
-        if($action_report->getNumberOfInvalidActions()>0)
-        {
+        $table_html = "";
+        if($action_report->getNumberOfInvalidActions()>0) {
             // Get an array with all invalid actions (array[0] is the headerrow)
             $invalid_actions = $action_report->getInvalidActions();
             

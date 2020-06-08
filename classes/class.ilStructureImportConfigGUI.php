@@ -110,7 +110,7 @@ class ilStructureImportConfigGUI extends ilPluginConfigGUI
     			            $field->setOptions($item['options']);
     			            break;
     			        case 'ilRadioGroupInputGUI':
-    			            foreach($item[options] as $radio_name=>$radio_id)
+    			            foreach($item['options'] as $radio_name=>$radio_id)
     			            {
     			                 $field->addOption(new ilRadioOption($this->plugin->txt('config_' . $radio_name), $radio_id));
     			            }

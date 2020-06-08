@@ -23,8 +23,14 @@ class ilStructureImportPlugin extends ilUserInterfaceHookPlugin
 	{
 			return "StructureImport";
 	}
-	
-	/**
+
+	public function txt(string $a_var) : string
+    {
+        global $DIC;
+        return $DIC->language()->txt('ui_uihk_structureimport_'.$a_var);
+    }
+
+    /**
 	 * @return ilStructureImportDBManager
 	 */
 	public static function getInstance() {
