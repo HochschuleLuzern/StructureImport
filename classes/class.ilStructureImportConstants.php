@@ -9,7 +9,7 @@ class ilStructureImportConstants
     const IMPORT_FILENAME = 'importFilename';
     const IMPORT_FILEDIR_REL = 'StructureImport/import/';
     const IMPORT_FILEDIR_ABS = CLIENT_DATA_DIR . '/' . self::IMPORT_FILEDIR_REL;
-    const DEFAULT_LOGFILE_DIR = CLIENT_DATA_DIR . '/StructureImport/log/';
+    const DEFAULT_LOGFILE_DIR = CLIENT_DATA_DIR . '/StructureImport/log';
     
     // Tab name Constants
     const TAB_INSTRUCTION_ID = 'ilstructureimportinstruction';
