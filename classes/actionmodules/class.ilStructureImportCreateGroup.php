@@ -46,7 +46,7 @@ class ilStructureImportCreateGroup extends ilStructureImportCreate
 		// Check if there is 1 or more users given for the admin role
 		// This is only the case, if the given user role is the "Admin"-Role and there is min 1 user
 		// Else the person who executes the import will be added as "Admin"
-		if($role_string == $this->plugin->txt('role_admin') && count($user_array) > 0)
+		if(strtolower($role_string) == $this->plugin->txt('role_admin') && count($user_array) > 0)
 		{
 		    $has_admin_user = true;
 		}
