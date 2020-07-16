@@ -3,10 +3,6 @@ include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHoo
 include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/actiontypebase/class.ilStructureImportActionModuleBase.php';
 include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportPlugin.php';
 include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilImportExcel.php';
-include_once './Services/Membership/classes/class.ilParticipants.php';
-include_once './Modules/Group/classes/class.ilGroupParticipants.php';
-include_once './Modules/Course/classes/class.ilCourseParticipants.php';
-include_once './Modules/Course/classes/class.ilCourseConstants.php';
 
 class ilStructureImportAssignRole extends ilStructureImportActionModuleBase
 {

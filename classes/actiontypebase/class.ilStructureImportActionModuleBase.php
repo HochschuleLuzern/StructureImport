@@ -1,6 +1,5 @@
 <?php
 include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportConfig.php';
-include_once './Services/Object/classes/class.ilObject.php';
 
 abstract class ilStructureImportActionModuleBase
 {	
@@ -269,9 +268,6 @@ abstract class ilStructureImportActionModuleBase
 	    $status = 0;
 
 	    $obj_type = ilObject::_lookupType($obj_id);
-
-	    /* Getting the needed objects */
-	    include_once './Services/Membership/classes/class.ilParticipants.php';
 	    
 	    // Get the role id from its name
 	    $role_from_const = $this->getRoleConstFromString($role_string, $obj_type);
@@ -302,7 +298,6 @@ abstract class ilStructureImportActionModuleBase
 	    switch($obj_type)
 	    {
 	        case 'crs':
-	            include_once './Modules/Course/classes/class.ilCourseConstants.php';
 	            switch(strtolower($role_string))
 	            {
 	                case strtolower($this->plugin->txt('role_admin')):
@@ -326,11 +321,11 @@ abstract class ilStructureImportActionModuleBase
 	        case 'grp':
 	            switch(strtolower($role_string))
 	            {
-        	        case strtolower($this->plugin->txt('ROLE_ADMIN')):
+        	        case strtolower($this->plugin->txt('role_admin')):
         	            $role_from_const = IL_GRP_ADMIN;
         	            break;
         	            
-        	        case strtolower($this->plugin->txt('ROLE_MEMBER')):
+        	        case strtolower($this->plugin->txt('role_member')):
         	            $role_from_const = IL_GRP_MEMBER;
         	            break;
         	            
@@ -365,12 +360,10 @@ abstract class ilStructureImportActionModuleBase
 	    switch ($obj_type)
 	    {
 	        case 'crs':
-	            include_once './Modules/Course/classes/class.ilCourseParticipants.php';
 	            $participants_object = ilCourseParticipants::_getInstanceByObjId($obj_id);
 	            break;
 	            
 	        case 'grp':
-	            include_once './Modules/Group/classes/class.ilGroupParticipants.php';
 	            $participants_object = ilGroupParticipants::_getInstanceByObjId($obj_id);
 	            break;
 	            
