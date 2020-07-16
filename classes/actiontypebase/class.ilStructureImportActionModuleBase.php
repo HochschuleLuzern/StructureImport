@@ -269,6 +269,9 @@ abstract class ilStructureImportActionModuleBase
 
 	    $obj_type = ilObject::_lookupType($obj_id);
 	    
+	    /* Getting the needed objects */
+	    include_once './Services/Membership/classes/class.ilParticipants.php';
+	    
 	    // Get the role id from its name
 	    $role_from_const = $this->getRoleConstFromString($role_string, $obj_type);
 	    
