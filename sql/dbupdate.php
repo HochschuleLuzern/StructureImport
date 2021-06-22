@@ -103,8 +103,6 @@ if(count(ilObject::_getIdsForTitle($plugin->getRoleName(), 'role', false)) < 1)
 	$role = new ilObjRole();
 	$role->setTitle($plugin->getRoleName());
 	$role->setDescription($plugin->getRoleDescription());
-	$role->setDiskQuota(0);
-	$role->setPersonalWorkspaceDiskQuota(0);
 	
 	$role->create();
 	

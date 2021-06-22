@@ -96,8 +96,8 @@ class ilStructureImportCreateGroup extends ilStructureImportCreate
 	            ilStructureImportConstants::GROUP_TYPE => array(
 	                    'type' => 'ilRadioGroupInputGUI',
 	                    'options' => array(
-	                            'group_open' => GRP_TYPE_PUBLIC,
-	                            'group_closed' => GRP_TYPE_CLOSED
+	                            'group_open' => 'GRP_TYPE_PUBLIC',
+	                            'group_closed' => 'GRP_TYPE_CLOSED'
 	                            /* There are also GRP_TYPE_OPEN and GRP_TYPE_UNKNOWN
 	                             * But they are never meant to be selected */
 	                    )
@@ -125,7 +125,7 @@ class ilStructureImportCreateGroup extends ilStructureImportCreate
 	    $parent_values = parent::getDefaultConfigValues();
 	    
 	    $child_values = array(
-	            ilStructureImportConstants::GROUP_TYPE => GRP_TYPE_CLOSED
+	            ilStructureImportConstants::GROUP_TYPE => 'GRP_TYPE_CLOSED'
 	           );
 	    
 	    $default_values = $parent_values + $child_values;
