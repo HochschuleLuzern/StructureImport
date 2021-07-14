@@ -23,7 +23,7 @@ class ilStructureImportCreateFolder extends ilStructureImportCreate
 	protected function readStandardDicTpls()
 	{
 	    global $ilDB;
-	    $standard_tpls = array('Briefkasten', 'Dateiaustausch', 'Gruppenordner');
+	    $standard_tpls = array('Dateiaustausch', 'Gruppenordner');
 	    foreach($standard_tpls as $tpl_name)
 	    {
 	        $sql = "SELECT * FROM didactic_tpl_settings WHERE title = " . $ilDB->quote($tpl_name, "text");
