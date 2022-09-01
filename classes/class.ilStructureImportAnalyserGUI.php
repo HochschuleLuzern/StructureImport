@@ -5,10 +5,10 @@ include_once './Customizing/global/plugins/Services/UIComponent/UserInterfaceHoo
 
 /**
  * GUI-Class ilStructureImportAnalyserGUI
- * 
+ *
  * @author          faheer
  * @version         $Id:
- * 
+ *
  * TODO: If ilStructureImportTabContentGUI is renamed -> rename it here too!
  * @ilCtrl_isCalledBy ilStructureImportAnalyserGUI: ilStructureImportTabContentGUI
  */
@@ -16,10 +16,10 @@ class ilStructureImportAnalyserGUI
 {
     /**
      * Just the constructor...
-     * 
+     *
      * @param string $excel_file_path
      */
-    function __construct($excel_file_path)
+    public function __construct($excel_file_path)
     {
         global $DIC;
          
@@ -36,8 +36,7 @@ class ilStructureImportAnalyserGUI
     {
         $cmd = $this->ctrl->getCmd();
          
-        switch($cmd)
-        {
+        switch ($cmd) {
             case 'showReport':
                 {
                     $this->showReport();
@@ -52,8 +51,7 @@ class ilStructureImportAnalyserGUI
     {
         $action_report = $this->analyser->analyseActionsFromFile();
         
-        if($action_report != -1)
-        {
+        if ($action_report != -1) {
             $reporter_html = $this->createReportHTML($action_report);
         }
 
@@ -62,7 +60,7 @@ class ilStructureImportAnalyserGUI
     
     /**
      * Create the HTML-Code for the page out of a given action report
-     * 
+     *
      * @param   ilStructureImportActionReport $action_report
      * @return  string  html
      */
@@ -86,7 +84,7 @@ class ilStructureImportAnalyserGUI
         $link = $this->ctrl->getLinkTargetByClass(array(
                         ilStructureImportConstants::STANDARD_BASE_CLASS,
                         ilStructureImportConstants::STANDARD_CMD_CLASS,
-        ),'executeImport');
+        ), 'executeImport');
         $reporter_template->setVariable("LINK_TO_EXECUTE", $link);
         $reporter_template->setVariable("MSG_EXECUTE_IMPORT", $this->plugin->txt('button_execute_import'));
          
@@ -97,7 +95,7 @@ class ilStructureImportAnalyserGUI
         
         // If there are any actions that are analysed as invalid -> add a "Error table"
         $table_html = "";
-        if($action_report->getNumberOfInvalidActions()>0) {
+        if ($action_report->getNumberOfInvalidActions() > 0) {
             // Get an array with all invalid actions (array[0] is the headerrow)
             $invalid_actions = $action_report->getInvalidActions();
             
@@ -110,8 +108,7 @@ class ilStructureImportAnalyserGUI
         }
         
         // Go through all action-types and create for each type a table (the return from the table is as HTML)
-        foreach($action_report->getAllValidActionArrays() as $action_type=>$actions_array)
-        {
+        foreach ($action_report->getAllValidActionArrays() as $action_type => $actions_array) {
             // Get the headerrow and remove it from the array with all invalid actions
             $header_row = $actions_array[0];
             unset($actions_array[0]);
@@ -131,7 +128,7 @@ class ilStructureImportAnalyserGUI
     
     /**
      * Creates an IliasTable out of a given Action Array and its headerrow and returns the HTML-code of it
-     * 
+     *
      * @param String[]     $header_row
      * @param String[][]   $actions_array
      * @param String       $table_name
@@ -144,7 +141,7 @@ class ilStructureImportAnalyserGUI
         // Set the data for the table
         $tbl_mod->setData($actions_array);
         
-        // Return the HTLM-code of the table        
+        // Return the HTLM-code of the table
         return $tbl_mod->getHTML();
     }
 }

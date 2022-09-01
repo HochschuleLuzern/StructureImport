@@ -1,62 +1,60 @@
 <#1>
-<?php 
+<?php
 include_once('./Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/classes/class.ilStructureImportDBManager.php');
 
-if(!$ilDB->tableExists(ilStructureImportDBManager::TABLE_MODULES_NAME))
-{
-	$fields = array(
-		ilStructureImportDBManager::COL_MODULE_ID => array(
-			'type' => 'integer',
-			'length' => 4,
-			'notnull' => true
-		),
-		
-		ilStructureImportDBManager::COL_MODULE_NAME => array(
-			'type' => 'text',
-			'length' => 100,
-			'notnull' => true
-		),
-		ilStructureImportDBManager::COL_ACTION_TYPE => array(
-			'type' => 'text',
-			'length' => 100,
-			'notnull' => true
-		),
-		
-		ilStructureImportDBManager::COL_ACTION_LANG_NAME => array(
-			'type' => 'text',
-			'length' => 100,
-			'notnull' => true
-		),
-		
-		ilStructureImportDBManager::COL_REQUIRED_PARAMETERS => array(
-			'type' => 'text',
-			'length' => 255,
-			'notnull' => true
-		),
-		
-		ilStructureImportDBManager::COL_OPTIONAL_PARAMETERS => array(
-			'type' => 'text',
-			'length' => 255,
-			'notnull' => false
-		),
-		
-		ilStructureImportDBManager::COL_FILENAME => array(
-			'type' => 'text',
-			'length' => 255,
-			'notnull' => true
-		)
-	);
-	
-	$ilDB->createTable(ilStructureImportDBManager::TABLE_MODULES_NAME, $fields);
-	$ilDB->addPrimaryKey(ilStructureImportDBManager::TABLE_MODULES_NAME, array(ilStructureImportDBManager::COL_MODULE_ID));
-	$ilDB->addUniqueConstraint(ilStructureImportDBManager::TABLE_MODULES_NAME, array(ilStructureImportDBManager::COL_MODULE_NAME));
+if (!$ilDB->tableExists(ilStructureImportDBManager::TABLE_MODULES_NAME)) {
+    $fields = array(
+        ilStructureImportDBManager::COL_MODULE_ID => array(
+            'type' => 'integer',
+            'length' => 4,
+            'notnull' => true
+        ),
+        
+        ilStructureImportDBManager::COL_MODULE_NAME => array(
+            'type' => 'text',
+            'length' => 100,
+            'notnull' => true
+        ),
+        ilStructureImportDBManager::COL_ACTION_TYPE => array(
+            'type' => 'text',
+            'length' => 100,
+            'notnull' => true
+        ),
+        
+        ilStructureImportDBManager::COL_ACTION_LANG_NAME => array(
+            'type' => 'text',
+            'length' => 100,
+            'notnull' => true
+        ),
+        
+        ilStructureImportDBManager::COL_REQUIRED_PARAMETERS => array(
+            'type' => 'text',
+            'length' => 255,
+            'notnull' => true
+        ),
+        
+        ilStructureImportDBManager::COL_OPTIONAL_PARAMETERS => array(
+            'type' => 'text',
+            'length' => 255,
+            'notnull' => false
+        ),
+        
+        ilStructureImportDBManager::COL_FILENAME => array(
+            'type' => 'text',
+            'length' => 255,
+            'notnull' => true
+        )
+    );
+    
+    $ilDB->createTable(ilStructureImportDBManager::TABLE_MODULES_NAME, $fields);
+    $ilDB->addPrimaryKey(ilStructureImportDBManager::TABLE_MODULES_NAME, array(ilStructureImportDBManager::COL_MODULE_ID));
+    $ilDB->addUniqueConstraint(ilStructureImportDBManager::TABLE_MODULES_NAME, array(ilStructureImportDBManager::COL_MODULE_NAME));
 }
 ?>
 <#2>
-<?php 
+<?php
 
-if(!$ilDB->tableExists(ilStructureImportDBManager::TABLE_CONF_NAME))
-{
+if (!$ilDB->tableExists(ilStructureImportDBManager::TABLE_CONF_NAME)) {
     $fields = array(
             ilStructureImportDBManager::COL_CONF_MODULE => array(
                     'type' => 'text',
@@ -98,21 +96,19 @@ include_once './Services/Object/classes/class.ilObject.php';
 global $rbacadmin;
 
 $plugin = ilStructureImportPlugin::getInstance();
-if(count(ilObject::_getIdsForTitle($plugin->getRoleName(), 'role', false)) < 1)
-{
-	$role = new ilObjRole();
-	$role->setTitle($plugin->getRoleName());
-	$role->setDescription($plugin->getRoleDescription());
-	
-	$role->create();
-	
-	$rbacadmin->assignRoleToFolder($role->getId(), ROLE_FOLDER_ID,'y');
-	$rbacadmin->setProtected(
-		ROLE_FOLDER_ID,
-		$role->getId(),
-		'n'
-	);
-	
+if (count(ilObject::_getIdsForTitle($plugin->getRoleName(), 'role', false)) < 1) {
+    $role = new ilObjRole();
+    $role->setTitle($plugin->getRoleName());
+    $role->setDescription($plugin->getRoleDescription());
+    
+    $role->create();
+    
+    $rbacadmin->assignRoleToFolder($role->getId(), ROLE_FOLDER_ID, 'y');
+    $rbacadmin->setProtected(
+        ROLE_FOLDER_ID,
+        $role->getId(),
+        'n'
+    );
 }
 
 ?>

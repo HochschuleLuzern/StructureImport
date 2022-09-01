@@ -44,7 +44,7 @@ class ilStructureImportConstants
     
     /* Excel constants */
     
-    // Name of excelcolumns in lang-file 
+    // Name of excelcolumns in lang-file
     const EXCELCOL_COMMENT = 'excelcol_com';
     const EXCELCOL_NAME = 'excelcol_name';
     const EXCELCOL_PATH = 'excelcol_path';

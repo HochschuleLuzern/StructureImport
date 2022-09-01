@@ -22,8 +22,7 @@ class ilStructureImportAccess
      */
     public static function getInstance()
     {
-        if (!isset(self::$instance)) 
-        {
+        if (!isset(self::$instance)) {
             self::$instance = new self();
         }
         return self::$instance;
@@ -33,7 +32,7 @@ class ilStructureImportAccess
      * This function is an allround check if the user has access to the plugin.
      * Use this function only if you only want a true/false answer and dont care
      * about the reason.
-     * 
+     *
      * @param integer   $ref_id
      * @return boolean  $has_access
      */
@@ -42,19 +41,16 @@ class ilStructureImportAccess
         $has_access = false;
         
         // $ilUser is not necesseraly defined (access for newsfeed etc.)
-        if(!$this->ilUser)
-        {
+        if (!$this->ilUser) {
             return false;
         }
         
         // No Structure Import from root
-        if($ref_id > 0)
-        {
+        if ($ref_id > 0) {
             $user_id = $this->ilUser->getId();
             
             /* Check if is Admin or Importer*/
-            if($this->isAdminRole($user_id) || $this->isImporterRole($user_id))
-            {
+            if ($this->isAdminRole($user_id) || $this->isImporterRole($user_id)) {
                 /* Check if the user has create access for every object that could be created
                  * with the structure import (at the moment thats cat, crs, grp and fold) */
                 $has_access = $this->hasCreateAccess($user_id, $ref_id);
@@ -86,12 +82,9 @@ class ilStructureImportAccess
         // The importer Role will be created at installation and has a variable obj_id for every installation
         $importer_role_id = $this->plugin->getImporterRoleId();
         
-        if($importer_role_id != null)
-        {
+        if ($importer_role_id != null) {
             $is_importer = in_array($user_id, $this->rbacreview->assignedUsers($importer_role_id));
-        }
-        else
-        {
+        } else {
             $is_importer = false;
         }
         
@@ -113,14 +106,12 @@ class ilStructureImportAccess
         $allowed_subtypes = $this->getCreatableActionmoduletypes($target_type);
         $has_create_access = false;
         
-        if(count($allowed_subtypes)>0)
-        {
+        if (count($allowed_subtypes) > 0) {
             $has_create_access = true;
             
             /* Check if create access for every create-module is granted */
-            foreach($allowed_subtypes as $create_type)
-            {
-                    $has_create_access &= $this->rbacsystem->checkAccessOfUser($user_id, 'create', $ref_id, $create_type);
+            foreach ($allowed_subtypes as $create_type) {
+                $has_create_access &= $this->rbacsystem->checkAccessOfUser($user_id, 'create', $ref_id, $create_type);
             }
         }
 
@@ -145,7 +136,7 @@ class ilStructureImportAccess
          * So this SQL saves every allowed subtype in an array and I combine it with all action modules */
         $sql = sprintf("SELECT subobj FROM il_object_subobj WHERE parent = %s", $ilDB->quote($type, "text"));
         $result = $ilDB->query($sql);
-        while($allowed_subtypes[] = ($ilDB->fetchAssoc($result)['subobj']));
+        while ($allowed_subtypes[] = ($ilDB->fetchAssoc($result)['subobj']));
         
         // Get every create-action from the action modules
         $types_from_action_modules = $this->plugin->getCreateTypesAsArray();
