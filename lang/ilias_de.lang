@@ -1,123 +1,115 @@
+/**
+/ German Language File for Structure-Import-Plugin
+**/
 <!-- language file start -->
-title#:#Strukturimport
-reporter_analysis_title#:#Kurze Aktionsübersicht zur Datei: 
-tab_title#:#Strukturimport
-tab_instruction#:#Anleitung
-tab_back_link#:#Zurück
-tab_update_db#:#Update Action Modules
-importer_role_description#:#Diese Rolle berechtigt die zugewiesenen User zur Verwendung des Strukturimports.
-
-title_upload#:#Strukturimport: Datei hochladen
-title_report_info#:#Infos zum Strukturimport
-button_upload#:#Datei hochladen
-button_execute_import#:#Strukturimport ausführen!
-
+action_assign_role#:#Zuordnen: Rolle
 action_create_category#:#Erstellen: Kategorie
 action_create_course#:#Erstellen: Kurs
 action_create_folder#:#Erstellen: Ordner
 action_create_group#:#Erstellen: Gruppe
-action_assign_role#:#Zuordnen: Rolle
-
+assign#:#Zuordnen
+assign_role#:#Kursrolle/Gruppenrolle einem User zuordnen
+button_execute_import#:#Strukturimport ausführen!
+button_upload#:#Datei hochladen
+config_avoid_duplicate_creation#:#Beim erstellen Duplikate vermeiden
+config_avoid_duplicate_creation_info#:#Beim erstellen eines Objektes prüfen ob es bereits existiert um Duplikate zu vermeiden.
+config_check_name_and_type_for_duplicate#:#Verhindere Objekte mit dem selben Namen und Typ im Container
+config_crs_activation_limited#:#Limitiert verfügbar
+config_crs_activation_offline#:#Offline
+config_crs_activation_type#:#Kurs verfügbarkeit
+config_crs_activation_unlimited#:#Unlimitiert verfügbar
+config_group_closed#:#Gruppe geschlossen
+config_group_open#:#Gruppe offen
+config_group_type#:#Standard Gruppentyp
+config_ignore_duplicate#:#Ignoriere Objekte mit dem selben Namen
+config_instruction_conf_info#:#Ilias Verzeichnis in dem Dokumentationen für Anwender hinterlegt sind. Am besten mit einem "goto"-Link hinterlegt.
+config_instruction_files_container#:#Dokumentationsverzeichnis
+config_log_level#:#Loglevel
+config_log_level_info#:#1=Alles, 5=Wichtiges, 10=Fehler, 20=Kritische Fehler, 30=Fatale Fehler
+config_log_path#:#Pfad zum Logfile
+config_log_path_recomment#:#Empfohlen ist: "./Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/log/"
+config_only_check_name_for_duplicate#:#Verhindere Objekte mit dem selben Namen im Container
+config_order_type#:#Sortierung
+config_saved#:#Konfiguration gespeichert
+config_sort_by_activation#:#Zeitvorgaben
+config_sort_by_creation#:#Datum
+config_sort_by_inherit#:#Erben
+config_sort_by_manual#:#Manuell
+config_sort_by_title#:#Titel
+configuration_title#:#Strukturimport Einstellungen
+create#:#Erstellen
 create_category#:#Kategorie erstellen
 create_course#:#Kurs erstellen
 create_folder#:#Ordner erstellen
 create_group#:#Gruppe erstellen
-assign_role#:#Kursrolle/Gruppenrolle einem User zuordnen
-
-create#:#Erstellen
-assign#:#Zuordnen
 delete#:#Löschen
-invalid_entries#:#Fehlerhafte Einträge
-
+error_action_permission_denied#:#Fehler: Ihnen fehlen die Berechtigungen für folgende Aktion: 
+error_action_unknown#:#Fehler: Aktion unbekannt
+error_double_existing_object#:#Fehler: Container ist mehrfach vorhanden.
+error_file_not_found#:#Datei für den Strukturimport konnte nicht gefunden werden: 
+error_fileupload#:#Beim hochladen der Date ist ein Fehler aufgetreten.
+error_iluser_is_not_set#:#Fehler: Sie sind kein User. Somit erhalten Sie keinen Zugang zu diesem Plugin
+error_invalid_excelsheet#:#Fehler: Ungültige Datei.
+error_link_missing#:#Kein Link vorhanden
+error_module_not_found_in_db#:#Modul konnte in der Datenbank nicht gefunden werden
+error_obj_subobj_not_allowed#:#Fehler: Folgender Objekttyp ist in diesem Container nicht erlaubt:
+error_object_is_unassignable#:#Fehler: Fehler: Diesem objekt kann man keine User zuordnen.
+error_plugin_is_deactivated#:#Fehler: Um das Plugin zu verwenden muss es zuerst aktiviert werden ;)
+error_plugin_permission_denied#:#Fehler: Sie besitzen nicht die benötigten Berechtigungen um dieses Plugin auszuführen. Falls Sie diese benötigen, kontaktieren Sie einen Systemadministrator.
+error_required_parameter_is_empty#:#Folgender Eintrag in dieser Aktion fehlt: 
+error_unknown_cmd#:#Unbekannte Aktion:
+error_unknown_exception_html_out#:#Ein unbekannter Fehler ist aufgetreten.Er enthielt folgende Nachricht:<br>
+excelcol_action#:#Aktion
+excelcol_action_old#:#Aktion
 excelcol_com#:#Kom
+excelcol_description#:#Beschreibung
+excelcol_login#:#Login
 excelcol_name#:#Name
 excelcol_path#:#Pfad
-excelcol_action#:#Aktion
-excelcol_description#:#Beschreibung
-excelcol_action_old#:#Aktion
-excelcol_type_old#:#Typ
-excelcol_login#:#Login
-excelcol_role#:#Rolle
 excelcol_permission_type#:#Rechtetyp
+excelcol_role#:#Rolle
 excelcol_sort_type#:#Sortiertyp
-
-folder_permission_postbox#:#Briefkasten
+excelcol_type_old#:#Typ
 folder_permission_exchange#:#Dateiaustausch
 folder_permission_group#:#Gruppenordner
 folder_permission_normal#:#Normal
-
-role_admin#:#admin
-role_tutor#:#tutor
-role_member#:#member
-
-msg_upload_info#:#
-msg_reporter_info#:#Die Exceldatei wurde einer kurzen Syntaxanalyse unterzogen. Von den %s eingetragenen Aktionen wurden %s als valide erkannt. Drücken Sie auf den Knopf "Strukturimport ausführen!" falls die unten aufgeführten Aktionen stimmen. Achtung! Das ausführen kann einiges an Zeit in Anspruch nehmen. Dies variert je nach Ressourcen des Systems. Bei einer normalen Umgebung muss mit etwa 1 Minute Zeit pro 200 Aktionen gerechnet werden!
+folder_permission_postbox#:#Briefkasten
+importer_role_description#:#Diese Rolle berechtigt die zugewiesenen User zur Verwendung des Strukturimports.
+instruction_caution_with_errors_html_text#:#<b>Achtung!</b> Wir empfehlen einen Strukturimport nur zu starten, wenn alle fehlerhaften Einträge behoben sind. Durch Fehler können häufig Folgefehler entstehen. Solche Folgefehler kann die Prüfung nicht erkennen. Wird zum Beispiel ein Kurs nicht erstellt, weil seine Pfadangabe nicht korrekt ist oder die Aktion einen Schreibfehler enthält, so kann sich das auf die folgenden Objekte auswirken. Wenn beispielsweise die Folgeobjekte sich durch einen ‚.‘(Punkt) auf den Pfad des fehlerhaften Kurses beziehen, so werden diese an einem völlig anderen Ort erstellt.
+instruction_check_actions_and_import_text#:#Auf dieser Seite wird eine kurze Analyse des Dokuments angezeigt. Dabei wird jede Aktionsgruppe in einer eigenen Tabelle dargestellt. Im Idealfall sieht man hier eine Liste mit den Aktionen, welche im Excel eingetragen wurden. Wichtig ist jedoch die oberste Tabelle mit der Bezeichnung „Fehlerhafte Einträge“. Sie enthält alle Aktionen, welche nicht ausgeführt werden können. Im Beispiel unten wurde kein Pfad definiert. Anschliessend wird mit einem Klick auf „Strukturimport ausführen!“ der Strukturimport ausgeführt.
+instruction_check_actions_and_import_title#:#4. Aktionen prüfen und ausführen
+instruction_choose_dir_text#:#Als erstes muss eine Kategorie, ein Kurs, eine Gruppe oder ein Ordner als Startpunkt ausgewählt werden. In diesem Verzeichnis sollen die weiteren Strukturen erstellt werden. Im gewünschten Verzeichnis befindet sich ein Tab mit der Bezeichnung „Strukturimport“. Dieser erscheint nur, wenn der Nutzer die benötigten Berechtigungen dazu besitzt. Diesen Tab anklicken um zum Strukturimport zu gelangen.
+instruction_choose_dir_title#:#2. Verzeichnis auswählen
+instruction_create_excel_text#:#Für den Struktur Import wird eine Excel-Datei in einem bestimmten Format benötigt, welche die zu importierende Struktur enthält. Eine Anleitung dazu und diverse Beispieldateien sind im Link oben. In der Abbildung unten ist eine Beispieltabelle für eine Struktur mit Englischkursen zu sehen.
+instruction_create_excel_title#:#1. Exceldatei erstellen
+instruction_infobox#:#Information betreffend Exceldatei für den Import: Mit der neuen Version des Struktur Imports wurde das Schema der Exceldatei leicht abgeändert. Die Spalten „Aktion“ und „Typ“ wurden nun zu einer einzelnen Spalte zusammengefügt. Dies erleichtert die Bedienung enorm, da nun nur noch vorhanden Aktionen ausgewählt werden können. Aus kompatibilitätsgründen wird die alte Exceldatei jedoch immernoch akzeptiert, sofern sie folgende Bedingungen erfüllt: Für die Aktion „Erstellen“ sind nur die Typen „Kategorie“, „Kurs“, „Gruppe“ und „Ordner“ möglich und für die Aktion „Zuordnen“ nur der Typ „Rolle“. Alle anderen Funktionen werden nicht mehr unterstützt. Sollte eine andere Funktion zwingend notwendig sein, so melden Sie sich bitte beim Ilias-Support der Hochschule Luzern.
+instruction_link_to_documents#:#Klick hier um zur kompletten Dokumentation und den beispiel Exceldateien zu gelangen.
+instruction_main_text#:#Auf dieser Seite befindet sich eine kurze Anleitung wie ein Strukturimport durchgeführt wird. Unten ist ein Link für die gesamte Dokumentation über dieses Plugin und zusätzliche Excelbeispiel vorhanden.
+instruction_main_title#:#Anleitung zum Strukturimport
+instruction_upload_file_text#:#In diesem Bereich kann nun mit einem Klick auf „Durchsuchen“ die Exceldatei für den Import ausgewählt und anschliessend mit einem Klick auf „Datei hochladen“ hochgeladen werden. Das Hochladen der Datei führt den Import noch nicht aus! Die Datei wird zuerst auf ihre Gültigkeit geprüft und das Resultat der Prüfung wird zu Kontrolle angezeigt.
+instruction_upload_file_title#:#3. Datei hochladen
+invalid_entries#:#Fehlerhafte Einträge
+main_settings#:#Haupteinstellungen
 msg_action_unknown#:#Aktion konnte nicht gefunden werden.
-msg_no_entries#:#Für diese Tabelle gibt es keine Einträge
+msg_empty_import_excelsheet#:#In der Datei sind keine verfügbaren Aktionen aufgelistet. Somit kann nichts importiert werden.
+msg_error#:#Fehlermeldung
 msg_import_file#:#Datei:
 msg_import_finished#:#Import beendet!
 msg_log_path_text#:#Logfile unter: 
 msg_modules_in_db#:#Folgende Module sind zurzeit in der Datenbank:
-msg_empty_import_excelsheet#:#In der Datei sind keine verfügbaren Aktionen aufgelistet. Somit kann nichts importiert werden.
+msg_no_entries#:#Für diese Tabelle gibt es keine Einträge
+msg_reporter_info#:#Die Exceldatei wurde einer kurzen Syntaxanalyse unterzogen. Von den %s eingetragenen Aktionen wurden %s als valide erkannt. Drücken Sie auf den Knopf "Strukturimport ausführen!" falls die unten aufgeführten Aktionen stimmen. Achtung! Das ausführen kann einiges an Zeit in Anspruch nehmen. Dies variert je nach Ressourcen des Systems. Bei einer normalen Umgebung muss mit etwa 1 Minute Zeit pro 200 Aktionen gerechnet werden!
+msg_upload_info#:#
 msg_wait_text#:#Import wird durchgeführt. Dies kann einen Moment dauern.
-msg_error#:#Fehlermeldung
-
-error_file_not_found#:#Datei für den Strukturimport konnte nicht gefunden werden: 
-error_unknown_exception_html_out#:#Ein unbekannter Fehler ist aufgetreten.Er enthielt folgende Nachricht:<br>
-error_invalid_excelsheet#:#Fehler: Ungültige Datei.
-error_fileupload#:#Beim hochladen der Date ist ein Fehler aufgetreten.
-error_required_parameter_is_empty#:#Folgender Eintrag in dieser Aktion fehlt: 
-error_double_existing_object#:#Fehler: Container ist mehrfach vorhanden.
-error_object_is_unassignable#:#Fehler: Fehler: Diesem objekt kann man keine User zuordnen.
-error_obj_subobj_not_allowed#:#Fehler: Folgender Objekttyp ist in diesem Container nicht erlaubt:
-error_action_permission_denied#:#Fehler: Ihnen fehlen die Berechtigungen für folgende Aktion: 
-error_action_unknown#:#Fehler: Aktion unbekannt
-error_plugin_permission_denied#:#Fehler: Sie besitzen nicht die benötigten Berechtigungen um dieses Plugin auszuführen. Falls Sie diese benötigen, kontaktieren Sie einen Systemadministrator.
-error_plugin_is_deactivated#:#Fehler: Um das Plugin zu verwenden muss es zuerst aktiviert werden ;)
-error_iluser_is_not_set#:#Fehler: Sie sind kein User. Somit erhalten Sie keinen Zugang zu diesem Plugin
-error_module_not_found_in_db#:#Modul konnte in der Datenbank nicht gefunden werden
-error_unknown_cmd#:#Unbekannte Aktion:
-error_link_missing#:#Kein Link vorhanden
-
-configuration_title#:#Strukturimport Einstellungen
+reporter_analysis_title#:#Kurze Aktionsübersicht zur Datei: 
+role_admin#:#admin
+role_member#:#member
+role_tutor#:#tutor
 settings_from#:#Einstellungen von: 
-main_settings#:#Haupteinstellungen
-config_saved#:#Konfiguration gespeichert
-config_log_path#:#Pfad zum Logfile
-config_log_path_recomment#:#Empfohlen ist: "./Customizing/global/plugins/Services/UIComponent/UserInterfaceHook/StructureImport/log/"
-config_log_level#:#Loglevel
-config_log_level_info#:#1=Alles, 5=Wichtiges, 10=Fehler, 20=Kritische Fehler, 30=Fatale Fehler
-config_avoid_duplicate_creation#:#Beim erstellen Duplikate vermeiden
-config_avoid_duplicate_creation_info#:#Beim erstellen eines Objektes prüfen ob es bereits existiert um Duplikate zu vermeiden.
-config_group_type#:#Standard Gruppentyp
-config_group_open#:#Gruppe offen
-config_group_closed#:#Gruppe geschlossen
-config_order_type#:#Sortierung
-config_sort_by_title#:#Titel
-config_sort_by_manual#:#Manuell
-config_sort_by_activation#:#Zeitvorgaben
-config_sort_by_inherit#:#Erben
-config_sort_by_creation#:#Datum
-config_ignore_duplicate#:#Ignoriere Objekte mit dem selben Namen
-config_only_check_name_for_duplicate#:#Verhindere Objekte mit dem selben Namen im Container
-config_check_name_and_type_for_duplicate#:#Verhindere Objekte mit dem selben Namen und Typ im Container
-config_crs_activation_type#:#Kurs verfügbarkeit
-config_crs_activation_offline#:#Offline
-config_crs_activation_unlimited#:#Unlimitiert verfügbar
-config_crs_activation_limited#:#Limitiert verfügbar
-config_instruction_files_container#:#Dokumentationsverzeichnis
-config_instruction_conf_info#:#Ilias Verzeichnis in dem Dokumentationen für Anwender hinterlegt sind. Am besten mit einem "goto"-Link hinterlegt.
-
-instruction_main_title#:#Anleitung zum Strukturimport
-instruction_main_text#:#Auf dieser Seite befindet sich eine kurze Anleitung wie ein Strukturimport durchgeführt wird. Unten ist ein Link für die gesamte Dokumentation über dieses Plugin und zusätzliche Excelbeispiel vorhanden.
-instruction_link_to_documents#:#Klick hier um zur kompletten Dokumentation und den beispiel Exceldateien zu gelangen.
-instruction_infobox#:#Information betreffend Exceldatei für den Import: Mit der neuen Version des Struktur Imports wurde das Schema der Exceldatei leicht abgeändert. Die Spalten „Aktion“ und „Typ“ wurden nun zu einer einzelnen Spalte zusammengefügt. Dies erleichtert die Bedienung enorm, da nun nur noch vorhanden Aktionen ausgewählt werden können. Aus kompatibilitätsgründen wird die alte Exceldatei jedoch immernoch akzeptiert, sofern sie folgende Bedingungen erfüllt: Für die Aktion „Erstellen“ sind nur die Typen „Kategorie“, „Kurs“, „Gruppe“ und „Ordner“ möglich und für die Aktion „Zuordnen“ nur der Typ „Rolle“. Alle anderen Funktionen werden nicht mehr unterstützt. Sollte eine andere Funktion zwingend notwendig sein, so melden Sie sich bitte beim Ilias-Support der Hochschule Luzern.
-instruction_create_excel_title#:#1. Exceldatei erstellen
-instruction_create_excel_text#:#Für den Struktur Import wird eine Excel-Datei in einem bestimmten Format benötigt, welche die zu importierende Struktur enthält. Eine Anleitung dazu und diverse Beispieldateien sind im Link oben. In der Abbildung unten ist eine Beispieltabelle für eine Struktur mit Englischkursen zu sehen.
-instruction_choose_dir_title#:#2. Verzeichnis auswählen
-instruction_choose_dir_text#:#Als erstes muss eine Kategorie, ein Kurs, eine Gruppe oder ein Ordner als Startpunkt ausgewählt werden. In diesem Verzeichnis sollen die weiteren Strukturen erstellt werden. Im gewünschten Verzeichnis befindet sich ein Tab mit der Bezeichnung „Strukturimport“. Dieser erscheint nur, wenn der Nutzer die benötigten Berechtigungen dazu besitzt. Diesen Tab anklicken um zum Strukturimport zu gelangen.
-instruction_upload_file_title#:#3. Datei hochladen
-instruction_upload_file_text#:#In diesem Bereich kann nun mit einem Klick auf „Durchsuchen“ die Exceldatei für den Import ausgewählt und anschliessend mit einem Klick auf „Datei hochladen“ hochgeladen werden. Das Hochladen der Datei führt den Import noch nicht aus! Die Datei wird zuerst auf ihre Gültigkeit geprüft und das Resultat der Prüfung wird zu Kontrolle angezeigt.
-instruction_check_actions_and_import_title#:#4. Aktionen prüfen und ausführen
-instruction_check_actions_and_import_text#:#Auf dieser Seite wird eine kurze Analyse des Dokuments angezeigt. Dabei wird jede Aktionsgruppe in einer eigenen Tabelle dargestellt. Im Idealfall sieht man hier eine Liste mit den Aktionen, welche im Excel eingetragen wurden. Wichtig ist jedoch die oberste Tabelle mit der Bezeichnung „Fehlerhafte Einträge“. Sie enthält alle Aktionen, welche nicht ausgeführt werden können. Im Beispiel unten wurde kein Pfad definiert. Anschliessend wird mit einem Klick auf „Strukturimport ausführen!“ der Strukturimport ausgeführt.
-instruction_caution_with_errors_html_text#:#<b>Achtung!</b> Wir empfehlen einen Strukturimport nur zu starten, wenn alle fehlerhaften Einträge behoben sind. Durch Fehler können häufig Folgefehler entstehen. Solche Folgefehler kann die Prüfung nicht erkennen. Wird zum Beispiel ein Kurs nicht erstellt, weil seine Pfadangabe nicht korrekt ist oder die Aktion einen Schreibfehler enthält, so kann sich das auf die folgenden Objekte auswirken. Wenn beispielsweise die Folgeobjekte sich durch einen ‚.‘(Punkt) auf den Pfad des fehlerhaften Kurses beziehen, so werden diese an einem völlig anderen Ort erstellt.
+tab_back_link#:#Zurück
+tab_instruction#:#Anleitung
+tab_title#:#Strukturimport
+tab_update_db#:#Update Action Modules
+title#:#Strukturimport
+title_report_info#:#Infos zum Strukturimport
+title_upload#:#Strukturimport: Datei hochladen
